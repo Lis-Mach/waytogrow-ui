@@ -1,0 +1,68 @@
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
+import userReducer from "./userReducer";
+import api from "./api";
+
+const initialState: IUserWithID[] = [];
+
+const UserContext = createContext<{
+  user: IUserWithID[];
+  addUser: (newUser: IUser) => void;
+  deleteUser: (id: number) => void;
+}>({ user: [], addUser: () => {}, deleteUser: () => {} });
+
+export function UserContextProvider({
+  children,
+}: PropsWithChildren): React.ReactElement {
+  const [state, dispatch] = useReducer(userReducer, initialState);
+
+  async function addUser(newUser: IUser) {
+    try {
+      const resposne = await api.post("/user", newUser);
+      dispatch({ type: "ADD_USER", payload: resposne.data });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function editUser(id: number, editedUser: IUser) {
+    dispatch({ type: "EDIT_USER", payload: { ...editedUser, id } });
+  }
+
+  async function deleteUser(id: number) {
+    try {
+      await api.delete(`/user/${id}`);
+      dispatch({ type: "DELETE_USER", payload: { id } });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function getUsers() {
+    try {
+      const response = await api<IUserWithID[]>("/user/all");
+      dispatch({ type: "SET_USERS", payload: response.data.data });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  return (
+    <UserContext.Provider value={{ user: state, addUser, deleteUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+}
+
+export default function useUserContext() {
+  return useContext(UserContext);
+}

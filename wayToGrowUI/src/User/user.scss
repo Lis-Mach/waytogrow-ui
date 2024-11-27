@@ -1,0 +1,15 @@
+.user {
+  padding: 5px;
+  cursor: pointer;
+
+  &:nth-child(odd) {
+    background-color: #f4f4f4;
+  }
+}
+
+.profile {
+  padding: 0 20px;
+  &__name {
+    margin-top: 0;
+  }
+}
