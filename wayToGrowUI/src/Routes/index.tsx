@@ -37,9 +37,9 @@ const Routes: React.FC = () => {
         {
           path: "/plans",
           element: (
-            <LoginContextProvider>
+            <UserContextProvider>
               <PlanPage />
-            </LoginContextProvider>
+            </UserContextProvider>
           ),
         },
       ],
