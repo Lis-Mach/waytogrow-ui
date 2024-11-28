@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import React from "react";
-import { MDBContainer, MDBInput, MDBBtn, MDBTextArea } from "mdb-react-ui-kit";
+import { MDBContainer, MDBInput, MDBBtn } from "mdb-react-ui-kit";
 import useLoginContext from "../Provider/LoginContext";
+import { ILogin } from "../App.interfaces";
 
 function LoginPage(): React.ReactElement {
   
@@ -30,7 +31,7 @@ function LoginPage(): React.ReactElement {
     formRef.current?.reset(); 
     formRef.current?.login.focus();
     if (success) {
-      navigate("/", { replace: true });
+      navigate("/plans", { replace: true });
     } else {
       setError(true);
     }
@@ -69,12 +70,12 @@ function LoginPage(): React.ReactElement {
         </MDBBtn>
         <div className="text-center">
           <p>
-            Not a member? <a href="#!">Register</a>
+            Not a member? <a href="/register">Register</a>
           </p>
         </div>
       </MDBContainer>
     </form>
   );
 }
-//https://dev.to/sanjayttg/jwt-authentication-in-react-with-react-router-1d03
+
 export default LoginPage;

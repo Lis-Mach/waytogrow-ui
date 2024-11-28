@@ -1,9 +1,12 @@
 import { RouterProvider, createBrowserRouter, RouteObject } from "react-router-dom";
 import { useAuth } from "../Provider/authProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
-import Logout  from "../Pages/Logout";
+import PlanPage  from "../Pages/PlanPage";
 import Login  from "../Pages/LoginPage";
 import { LoginContextProvider } from "../Provider/LoginContext";
+import HomePage from "../Pages/HomePage";
+import RegisterPage from "../Pages/RegisterPage";
+import { UserContextProvider } from "../Provider/UserContext";
 
 // Define the Routes component with types
 const Routes: React.FC = () => {
@@ -32,14 +35,10 @@ const Routes: React.FC = () => {
           element: <div>User Home Page</div>,
         },
         {
-          path: "/profile",
-          element: <div>User Profile</div>,
-        },
-        {
-          path: "/logout",
+          path: "/plans",
           element: (
             <LoginContextProvider>
-              <Logout />
+              <PlanPage />
             </LoginContextProvider>
           ),
         },
@@ -51,7 +50,7 @@ const Routes: React.FC = () => {
   const routesForNotAuthenticatedOnly: RouteObject[] = [
     {
       path: "/",
-      element: <div>Home Page</div>,
+      element: <HomePage/>,
     },
     {
       path: "/login",
@@ -59,6 +58,15 @@ const Routes: React.FC = () => {
         <LoginContextProvider>
           <Login />
         </LoginContextProvider>
+      ),
+    },
+    {
+      path: "/register",
+      element: (
+        <UserContextProvider>
+          <RegisterPage/>
+        </UserContextProvider>
+        
       ),
     },
   ];

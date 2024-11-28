@@ -1,26 +1,26 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 import api from "../api";
 import { useAuth } from "./authProvider";
-import { ILogin } from "../App.interfaces";
+import { IUser} from "../App.interfaces"
+import { AxiosError } from "axios";
 
-const LoginContext = createContext<{
-  logInFunction: (credentials: ILogin) => Promise<boolean>;
-  logout: () => void;
-}>({ logInFunction: async () => false, logout: () => {} });
+const UserContext = createContext<{
+    signup: (userData: IUser) => Promise<boolean>;
+}>({ signup: async () => false });
 
-export function LoginContextProvider({
+export function UserContextProvider({
   children,
 }: PropsWithChildren): React.ReactElement {
   const { setToken } = useAuth();
 
-  async function logInFunction(credentials: ILogin) {
-   
-      return await api.post("/login", credentials)
-      .then(function (response) {
+  async function signup(userData: IUser): Promise<boolean> {
+    return api.post("/signup", userData)
+        .then(function (response) {
         console.log(response.data)
         setToken(response.data.data.accessToken);
         return true;
-      }).catch(function (error) {
+      })
+      .catch(function (error) {
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
@@ -39,25 +39,17 @@ export function LoginContextProvider({
         }
         console.log(error.config);
         return false;
-  })
-    
-  }
+      })
+}
 
-  async function logout() {
-    try {
-      await api.post("/logout");
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   return (
-    <LoginContext.Provider value={{ logInFunction, logout }}>
+    <UserContext.Provider value={{ signup }}>
       {children}
-    </LoginContext.Provider>
+    </UserContext.Provider>
   );
 }
 
-export default function useLoginContext() {
-  return useContext(LoginContext);
+export default function useUserContext() {
+  return useContext(UserContext);
 }
