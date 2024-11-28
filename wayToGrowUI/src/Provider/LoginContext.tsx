@@ -8,9 +8,9 @@ interface ILogin {
 }
 
 const LoginContext = createContext<{
-  logInFunction: (credentials: ILogin) => void;
+  logInFunction: (credentials: ILogin) => Promise<boolean>;
   logout: () => void;
-}>({ logInFunction: () => {}, logout: () => {} });
+}>({ logInFunction: async () => false, logout: () => {} });
 
 export function LoginContextProvider({
   children,
@@ -22,8 +22,10 @@ export function LoginContextProvider({
       const response = await api.post("/login", credentials);
       console.log(response.data)
       setToken(response.data.data.accessToken);
+      return true;
     } catch (error) {
       console.error(error);
+      return false;
     }
   }
 
