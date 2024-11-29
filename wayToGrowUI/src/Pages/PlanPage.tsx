@@ -14,10 +14,10 @@ import {
   MDBRipple
 } from 'mdb-react-ui-kit';
 
-const PlanPage: React.FC = () => {
+export default function PlanPage (): React.ReactElement {
     const { setToken } = useAuth();
-  const navigate = useNavigate();
-  const { getUser } = useUserContext();
+    const navigate = useNavigate();
+    const { getUser } = useUserContext();
 
   async function handleLogout() {
     setToken(null); 
@@ -25,7 +25,7 @@ const PlanPage: React.FC = () => {
   };
 
   useEffect(() => {
-        getUser()       
+        getUser();      
   }, []) 
 
   return (
@@ -51,4 +51,3 @@ const PlanPage: React.FC = () => {
   );
 }
 
-export default PlanPage;

@@ -2,7 +2,6 @@ import { createContext, PropsWithChildren, useContext } from "react";
 import api from "../api";
 import { useAuth } from "./authProvider";
 import { IUser, IUserWithID} from "../App.interfaces"
-import { AxiosError } from "axios";
 
 const UserContext = createContext<{
     signup: (userData: IUser) => Promise<boolean>;
@@ -55,7 +54,7 @@ async function getUser() {
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.headers);
-          alert(error.response.data.error.message)
+        //   alert(error.response.data.error.message)
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of

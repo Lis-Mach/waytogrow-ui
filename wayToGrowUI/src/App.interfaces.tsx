@@ -13,4 +13,24 @@ export interface IUser {
 export interface ILogin {
     login: string;
     password: string;
+
+}
+
+export interface IPlan{
+    title: string;
+}
+
+export interface IPlanWithID extends IPlan{
+    id: number;
+}
+
+export interface IStep{
+    order: number;
+    title: string;
+    subtitle: string;
+    description: string;
+}
+
+export interface IStepWithID extends IStep{
+    id: number;
 }

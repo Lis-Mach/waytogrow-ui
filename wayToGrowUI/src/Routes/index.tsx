@@ -7,6 +7,8 @@ import { LoginContextProvider } from "../Provider/LoginContext";
 import HomePage from "../Pages/HomePage";
 import RegisterPage from "../Pages/RegisterPage";
 import { UserContextProvider } from "../Provider/UserContext";
+import { PlanContextProvider } from "../Provider/PlanContext";
+import { StepContextProvider } from "../Provider/StepContext";
 
 // Define the Routes component with types
 const Routes: React.FC = () => {
@@ -37,11 +39,21 @@ const Routes: React.FC = () => {
         {
           path: "/plans",
           element: (
-            <UserContextProvider>
-              <PlanPage />
-            </UserContextProvider>
+            <PlanContextProvider>
+              <UserContextProvider>
+                <PlanPage />
+              </UserContextProvider>
+            </PlanContextProvider>
           ),
         },
+        {
+          path: "/steps",
+          element: (
+            <StepContextProvider>
+                <PlanPage />
+            </StepContextProvider>
+          ),
+        }
       ],
     },
   ];
