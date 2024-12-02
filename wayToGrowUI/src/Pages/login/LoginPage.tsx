@@ -2,11 +2,10 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { MDBContainer, MDBInput, MDBBtn } from "mdb-react-ui-kit";
-import useLoginContext from "../Provider/LoginContext";
-import { ILogin } from "../App.interfaces";
+import useLoginContext from "../../Provider/LoginContext";
+import { ILogin } from "../../App.interfaces";
 
 function LoginPage(): React.ReactElement {
-  
   const { logInFunction } = useLoginContext();
 
   const navigate = useNavigate();
@@ -17,8 +16,9 @@ function LoginPage(): React.ReactElement {
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const errorElement =   <div className="text-center red">Wrong user or password!</div>;
-
+  const errorElement = (
+    <div className="text-center red">Wrong user or password!</div>
+  );
 
   function handlechange(e: React.ChangeEvent<HTMLInputElement>) {
     setLogin({ ...login, [e.target.name]: e.target.value });
@@ -28,7 +28,7 @@ function LoginPage(): React.ReactElement {
     e.preventDefault();
     setError(false);
     const success = await logInFunction(login);
-    formRef.current?.reset(); 
+    formRef.current?.reset();
     formRef.current?.login.focus();
     if (success) {
       navigate("/plans", { replace: true });
@@ -58,10 +58,8 @@ function LoginPage(): React.ReactElement {
           name="password"
           required
         />
-        {error && (errorElement)}
-       
-          
-        
+        {error && errorElement}
+
         <div className="d-flex justify-content-between mx-3 mb-4">
           {/* <a href="!#">Forgot password?</a> */}
         </div>

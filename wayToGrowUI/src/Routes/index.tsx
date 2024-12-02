@@ -1,11 +1,15 @@
-import { RouterProvider, createBrowserRouter, RouteObject } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  RouteObject,
+} from "react-router-dom";
 import { useAuth } from "../Provider/authProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
-import PlanPage  from "../Pages/PlanPage";
-import Login  from "../Pages/LoginPage";
+import PlanPage from "../Pages/plan/PlanPage";
+import Login from "../Pages/login/LoginPage";
 import { LoginContextProvider } from "../Provider/LoginContext";
-import HomePage from "../Pages/HomePage";
-import RegisterPage from "../Pages/RegisterPage";
+import HomePage from "../Pages/home/HomePage";
+import RegisterPage from "../Pages/register/RegisterPage";
 import { UserContextProvider } from "../Provider/UserContext";
 import { PlanContextProvider } from "../Provider/PlanContext";
 import { StepContextProvider } from "../Provider/StepContext";
@@ -50,10 +54,10 @@ const Routes: React.FC = () => {
           path: "/steps",
           element: (
             <StepContextProvider>
-                <PlanPage />
+              <PlanPage />
             </StepContextProvider>
           ),
-        }
+        },
       ],
     },
   ];
@@ -62,7 +66,7 @@ const Routes: React.FC = () => {
   const routesForNotAuthenticatedOnly: RouteObject[] = [
     {
       path: "/",
-      element: <HomePage/>,
+      element: <HomePage />,
     },
     {
       path: "/login",
@@ -76,9 +80,8 @@ const Routes: React.FC = () => {
       path: "/register",
       element: (
         <UserContextProvider>
-          <RegisterPage/>
+          <RegisterPage />
         </UserContextProvider>
-        
       ),
     },
   ];

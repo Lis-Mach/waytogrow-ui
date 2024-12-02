@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { MDBContainer, MDBInput, MDBBtn, MDBTextArea } from "mdb-react-ui-kit"; // Import MDB components
 import { useNavigate } from "react-router-dom";
-import useUserContext from "../Provider/UserContext";
-import { IUser } from "../App.interfaces";
+import useUserContext from "../../Provider/UserContext";
+import { IUser } from "../../App.interfaces";
 
 const RegisterPage: React.FC = () => {
   const { signup } = useUserContext();
@@ -42,11 +42,10 @@ const RegisterPage: React.FC = () => {
     console.log("Registering user:", formData);
 
     if (success) {
-      setError(null);  // Clear error if validation passes
+      setError(null); // Clear error if validation passes
       navigate("/plans"); // Redirect to plans
-    } 
-  
-  };
+    }
+  }
 
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">

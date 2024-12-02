@@ -16,7 +16,8 @@ const PlanContext = createContext<{
   addPlan: (newPlan: IPlan) => void;
   editPlan: (id: number, editedPlan: IPlan) => void;
   deletePlan: (id: number) => void;
-}>({ plans: [], addPlan: () => {}, editPlan: () => {}, deletePlan: () => {} });
+  getPlanImage: (id: number) => Promise<string | undefined>;
+}>({ plans: [], addPlan: () => {}, editPlan: () => {}, deletePlan: () => {}, getPlanImage: async () => undefined });
 
 export function PlanContextProvider({
   children,
@@ -48,9 +49,25 @@ export function PlanContextProvider({
   async function getPlans() {
     try {
       const response = await api<IPlanWithID[]>("/plan");
-      dispatch({ type: "SET_PLANS", payload: response.data });
+      dispatch({ type: "SET_PLANS", payload: response.data.data });
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  async function getPlanImage(id: number) {
+    try {
+      const response = await api.get(`/plan/${id}/image`, { responseType: "blob" });
+      
+      // Check if the response is a Blob and create an object URL
+      if (response.data instanceof Blob) {
+        return URL.createObjectURL(response.data);
+      } else {
+        throw new Error("Response is not a valid Blob.");
+      }
+    } catch (error) {
+      console.error("Error fetching image:", error);
+      return undefined;
     }
   }
 
@@ -60,7 +77,7 @@ export function PlanContextProvider({
 
   return (
     <PlanContext.Provider
-      value={{ plans: state, addPlan, editPlan, deletePlan }}
+      value={{ plans: state, addPlan, editPlan, deletePlan, getPlanImage }}
     >
       {children}
     </PlanContext.Provider>

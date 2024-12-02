@@ -18,6 +18,8 @@ export interface ILogin {
 
 export interface IPlan{
     title: string;
+    description: string;
+    image: string;
 }
 
 export interface IPlanWithID extends IPlan{
