@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 import usePlanContext from "../../Provider/PlanContext";
 
 interface PlanCardProps {
-    plans: IPlanWithID;  
+    plan: IPlanWithID;  
 }
 
 export default function PlanCard({plan }: PlanCardProps): React.ReactElement {
