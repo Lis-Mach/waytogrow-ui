@@ -11,6 +11,7 @@ import {
 import { IPlanWithID } from "../../App.interfaces";
 import React, { useEffect, useState } from "react";
 import usePlanContext from "../../Provider/PlanContext";
+import { useNavigate } from "react-router-dom"; 
 
 interface PlanCardProps {
     plan: IPlanWithID;  
@@ -18,6 +19,7 @@ interface PlanCardProps {
 
 export default function PlanCard({plan }: PlanCardProps): React.ReactElement {
     const {getPlanImage} = usePlanContext();
+    const navigate = useNavigate();
 
     const [imageSrc, setImageSrc] = useState<string | undefined>(undefined)
     
@@ -31,8 +33,16 @@ export default function PlanCard({plan }: PlanCardProps): React.ReactElement {
         fetchImage();
       }, [plan.id, getPlanImage]);
 
+      const handleViewSteps = () => {
+        navigate(`/steps/${plan.id}`);  // Navigate to /steps/:planId
+      };
+
+      
+      
+
+
 return (
-<MDBCol  md='4'>
+<MDBCol  md='4' >
     <MDBCard>
         
         <MDBRipple
@@ -57,7 +67,7 @@ return (
             <MDBCardText>
             {plan.description}
             </MDBCardText>
-            <MDBBtn href="#">Button</MDBBtn>
+            <MDBBtn onClick={handleViewSteps}>Button</MDBBtn>
         </MDBCardBody>
         </MDBCard>
     </MDBCol>

@@ -28,6 +28,7 @@ export interface IPlanWithID extends IPlan{
 
 export interface IStep{
     order: number;
+    plan_id: number;
     title: string;
     subtitle: string;
     description: string;

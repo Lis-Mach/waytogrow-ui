@@ -7,6 +7,8 @@ import { useAuth } from "../Provider/authProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
 import PlanPage from "../Pages/plan/PlanPage";
 import Login from "../Pages/login/LoginPage";
+import StepPage from "../Pages/step/StepPage";
+
 import { LoginContextProvider } from "../Provider/LoginContext";
 import HomePage from "../Pages/home/HomePage";
 import RegisterPage from "../Pages/register/RegisterPage";
@@ -51,10 +53,10 @@ const Routes: React.FC = () => {
           ),
         },
         {
-          path: "/steps",
+          path: "/steps/:planId",
           element: (
             <StepContextProvider>
-              <PlanPage />
+                <StepPage />
             </StepContextProvider>
           ),
         },

@@ -11,7 +11,8 @@ import {
 import PlanCardList from "./PlanCardList";
 
 
-export default function PlanPage(): React.ReactElement {
+
+ function PlanPage(): React.ReactElement {
   const { setToken } = useAuth();
   const navigate = useNavigate();
   const { getUser } = useUserContext();
@@ -25,6 +26,8 @@ export default function PlanPage(): React.ReactElement {
   useEffect(() => {
     getUser(); 
   }, []);
+  ///////////////////////////////////////??
+
 
   return (
     <MDBContainer> 
@@ -35,3 +38,5 @@ export default function PlanPage(): React.ReactElement {
   </MDBContainer>
   );
 }
+
+export default PlanPage;

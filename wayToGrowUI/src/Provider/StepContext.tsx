@@ -17,7 +17,8 @@ import {
     addStep: (newPlan: IStep) => void;
     editStep: (id: number, editedPlan: IStep)=>void;
     deleteStep: (id: number) => void;
-  }>({ steps: [], addStep: () => {}, editStep: () => {}, deleteStep: () => {} });
+    getSteps: (planId: number) => void;
+  }>({ steps: [], addStep: () => {}, editStep: () => {}, deleteStep: () => {},   getSteps: () => {}, });
 
   export function StepContextProvider({
     children,
@@ -46,21 +47,23 @@ import {
         }
       }
     
-      async function getSteps() {
+      async function getSteps(planId:number) {
         try {
-          const response = await api<IStepWithID[]>("/step");
-          dispatch({ type: "SET_STEPS", payload: response.data });
+          const response = await api<IStepWithID[]>(`plan/${planId}/step`);
+          dispatch({ type: "SET_STEPS", payload: response.data.data });
         } catch (error) {
           console.error(error);
         }
       }
     
       useEffect(() => {
-        getSteps();
-      }, []);
+        if (state.length === 0) {
+          console.log('No planId passed yet');
+        }
+      }, [state]);
 
       return (
-        <StepContext.Provider value={{ steps: state, addStep, editStep, deleteStep }}>
+        <StepContext.Provider value={{ steps: state, addStep, editStep, deleteStep, getSteps }}>
           {children}
         </StepContext.Provider>
       );
