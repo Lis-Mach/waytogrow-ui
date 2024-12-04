@@ -17,8 +17,6 @@ import RegisterPage from "../Pages/register/RegisterPage";
 import { UserContextProvider } from "../Provider/UserContext";
 import { PlanContextProvider } from "../Provider/PlanContext";
 import { StepContextProvider } from "../Provider/StepContext";
-import NavbarDetails from "../Pages/navbar";
-import FooterDetails from "../Pages/footer";
 import { SignupContextProvider } from "../Provider/SignupContext";
 
 
