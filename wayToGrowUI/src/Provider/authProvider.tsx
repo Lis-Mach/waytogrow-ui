@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState, ReactNode } from "react";
-import adapter from "../api";
+import api from "../api";
 
 // Define the type for the context value
 interface AuthContextType {
@@ -25,14 +25,14 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      adapter.defaults.headers.common['Authorization'] = "Bearer " + token;
-      adapter.defaults.headers.post['Content-Type'] = 'application/json';
+      api.defaults.headers.common['Authorization'] = "Bearer " + token;
+      api.defaults.headers.post['Content-Type'] = 'application/json';
       localStorage.setItem("token", token);
     } else {
-      delete adapter.defaults.headers.common["Authorization"];
+      delete api.defaults.headers.common["Authorization"];
       localStorage.removeItem("token");
     }
-    console.log('Axios default headers:', adapter.defaults.headers);
+    console.log('Axios default headers:', api.defaults.headers);
 
   }, [token]);
 

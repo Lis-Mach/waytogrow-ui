@@ -19,6 +19,7 @@ import { PlanContextProvider } from "../Provider/PlanContext";
 import { StepContextProvider } from "../Provider/StepContext";
 import NavbarDetails from "../Pages/navbar";
 import FooterDetails from "../Pages/footer";
+import { SignupContextProvider } from "../Provider/SignupContext";
 
 
 // Define the Routes component with types
@@ -91,9 +92,9 @@ const Routes: React.FC = () => {
     {
       path: "/register",
       element: (
-        <UserContextProvider>
+        <SignupContextProvider>
           <RegisterPage />
-        </UserContextProvider>
+        </SignupContextProvider>
       ),
     },
   ];

@@ -8,6 +8,7 @@ import {
 import planReducer from "../Reducers/planReducer";
 import api from "../api";
 import { IPlan, IPlanWithID } from "../App.interfaces";
+import { useAuth } from "../Provider/authProvider";
 
 const initialState: IPlanWithID[] = [];
 
@@ -23,6 +24,14 @@ export function PlanContextProvider({
   children,
 }: PropsWithChildren): React.ReactElement {
   const [state, dispatch] = useReducer(planReducer, initialState);
+  const { token } = useAuth();
+  useEffect(() => {
+    if (token) {
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      delete api.defaults.headers.common["Authorization"];
+    }
+  }, [token]);
 
   async function addPlan(newPlan: IPlan) {
     try {

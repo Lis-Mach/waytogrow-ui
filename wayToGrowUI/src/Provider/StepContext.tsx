@@ -8,6 +8,7 @@ import {
   import stepReducer from "../Reducers/stepReducer";
   import api from "../api";
   import { IStep, IStepWithID } from "../App.interfaces";
+  import { useAuth } from "../Provider/authProvider";
 
   const initialState: IStepWithID[] = [];
 
@@ -24,6 +25,14 @@ import {
     children,
   }: PropsWithChildren): React.ReactElement {
     const [state, dispatch] = useReducer(stepReducer, initialState);
+    const { token } = useAuth();
+  useEffect(() => {
+    if (token) {
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      delete api.defaults.headers.common["Authorization"];
+    }
+  }, [token]);
   
     async function addStep(newStep: IStep) {
       try {
