@@ -1,5 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../Provider/authProvider";
+import NavbarDetails from "../Pages/navbar";
+import FooterDetails from "../Pages/footer";
 
 export const ProtectedRoute: React.FC = () => {
   const { token } = useAuth();
@@ -11,5 +13,13 @@ export const ProtectedRoute: React.FC = () => {
   }
 
   // If authenticated, render the child routes
-  return <Outlet />;
+  return (
+    <>
+      <NavbarDetails />
+      <Outlet /> {/* Renders child routes */}
+      <FooterDetails />
+    </>
+  );
+  
+ 
 };

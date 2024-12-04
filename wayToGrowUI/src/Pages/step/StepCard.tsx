@@ -1,10 +1,10 @@
-import {
-   
-    MDBCol,
-    MDBContainer,
-    MDBRow
-  } from "mdb-react-ui-kit";
+import { MDBAccordionItem,
+  MDBCheckbox
+ } from "mdb-react-ui-kit";
   import { IStepWithID } from "../../App.interfaces";
+  import { useParams } from "react-router-dom";
+  import{ useState } from "react";
+
  
   
   interface StepCardProps {
@@ -14,26 +14,29 @@ import {
       
     
   export default function StepCard({step }: StepCardProps): React.ReactElement {
-    console.log(step);
+    
+    // useEffect(() => {
+    //   if (planId) {
+    //   }
+    // }, []); 
+
+    const [checked, setChecked] = useState(false);
+
 
   return (
- 
- <MDBContainer md='12'>
-      <MDBRow md='12'>
-        <MDBCol  md='1'>
-          order
-        </MDBCol>
-        <MDBCol  md='5'>
-        {step.title}
-        </MDBCol>
-        <MDBCol md='5'>
-        {step.subtitle}
-        </MDBCol>
-        <MDBCol md='1'>
-        {step.description}
-        </MDBCol>//bo to bedzie status done/not 
-        
-      </MDBRow>
-    </MDBContainer>
+<MDBAccordionItem collapseId={step.order} headerTitle={<>
+  <MDBCheckbox
+        id='controlledCheckbox'
+        checked={checked}
+        onChange={() => setChecked(!checked)}
+      /> &nbsp; &nbsp;  {step.title}</>}>
+{step.subtitle}
+</MDBAccordionItem>
   )
   };
+
+
+  // <MDBListGroupItem tag='label'>
+  //       <MDBCheckbox label={step.title} />
+  //     </MDBListGroupItem>
+  

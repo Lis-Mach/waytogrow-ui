@@ -67,7 +67,7 @@ return (
             <MDBCardText>
             {plan.description}
             </MDBCardText>
-            <MDBBtn onClick={handleViewSteps}>Button</MDBBtn>
+            <MDBBtn onClick={handleViewSteps}>Zobacz</MDBBtn>
         </MDBCardBody>
         </MDBCard>
     </MDBCol>

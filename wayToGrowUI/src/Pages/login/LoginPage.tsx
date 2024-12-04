@@ -31,7 +31,7 @@ function LoginPage(): React.ReactElement {
     formRef.current?.reset();
     formRef.current?.login.focus();
     if (success) {
-      navigate("/plans", { replace: true });
+      navigate("/", { replace: true });
     } else {
       setError(true);
     }

@@ -1,4 +1,4 @@
-import { MDBRow } from "mdb-react-ui-kit";
+import { MDBAccordion, MDBRow } from "mdb-react-ui-kit";
 import StepCard  from "./StepCard";
 import { IStepWithID } from "../../App.interfaces";
 
@@ -12,13 +12,15 @@ export default function StepCardList({steps }: StepCardListProps): React.ReactEl
 
     return (
         <div>
-            <MDBRow>
+                {/* //<MDBRow>{plan.title}</MDBRow> */}
+
+              <MDBAccordion initialActive={1}>
                 {
                     steps.map(step =>
                         <StepCard key={step.order} step={step}></StepCard>
                     )
                 }
-            </MDBRow>
+            </MDBAccordion>
         </div>
     )
 };

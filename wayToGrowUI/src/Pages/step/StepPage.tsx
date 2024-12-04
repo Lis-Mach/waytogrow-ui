@@ -5,7 +5,7 @@ import useStepContext from "../../Provider/StepContext";
 
 
 import React, { useEffect } from "react";
-import { MDBBtn, MDBContainer } from "mdb-react-ui-kit";
+import { MDBContainer } from "mdb-react-ui-kit";
 import StepCardList from "./StepCardList";
 import { useParams } from "react-router-dom";
 
@@ -13,14 +13,7 @@ function StepPage(): React.ReactElement {
   const { planId } = useParams(); // Retrieve the planId from the URL parameters
   const { steps, getSteps } = useStepContext();
 
-  console.log(`PLABID: DUPA SYLWIA: ${planId}`);
-  const { setToken } = useAuth();
-  const navigate = useNavigate();
-
-  async function handleLogout() {
-    setToken(null);
-    navigate("/", { replace: true });
-  }
+  console.log(`PLABID:  ${planId}`);
 
   useEffect(() => {
     if (planId) {
@@ -30,9 +23,7 @@ function StepPage(): React.ReactElement {
 
   return (
     <MDBContainer>
-      <MDBBtn onClick={handleLogout} className="ms-auto">
-        Wyloguj
-      </MDBBtn>
+        <h6> If step is finished, klick checkbox ...</h6>
       <StepCardList steps={steps} />
     </MDBContainer>
   );

@@ -15,8 +15,10 @@ const HomePage: React.FC = () => {
     <MDBContainer className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
       <MDBRow className="text-center">
         <MDBCol>
-          <h1>Welcome to your plans</h1>
-          <p className="lead">Login or register to start:</p>
+        <h1>Way to Grow</h1>
+        <> </>
+          <h3>Welcome to your plans</h3>
+          <p className="lead">Zaloguj się lub zarejestruj aby rozpocząć:</p>
           
           <div className="d-flex justify-content-center gap-3">
             {/* Login Button */}

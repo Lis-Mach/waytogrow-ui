@@ -37,3 +37,10 @@ export interface IStep{
 export interface IStepWithID extends IStep{
     id: number;
 }
+
+export interface UpdateUserPayload{
+    password: string;
+    name: string;
+    surname: string;
+    email: string;
+}

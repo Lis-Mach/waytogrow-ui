@@ -1,28 +1,31 @@
-import React, { useState } from "react";
-import { MDBContainer, MDBInput, MDBBtn, MDBTextArea } from "mdb-react-ui-kit"; // Import MDB components
 import { useNavigate } from "react-router-dom";
 import useUserContext from "../../Provider/UserContext";
-import { IUser } from "../../App.interfaces";
 
-const RegisterPage: React.FC = () => {
-  const { signup } = useUserContext();
+import React, { useEffect, useState, useRef } from "react";
+import { MDBBtn, MDBContainer, MDBInput } from "mdb-react-ui-kit";
+import { UpdateUserPayload } from "../../App.interfaces";
+
+export default function UserPage(): React.ReactElement {
   const navigate = useNavigate();
+  const { updateUser, getUser } = useUserContext();
 
   // State to manage form fields and error messages
-  const [formData, setFormData] = useState<IUser>({
-    login: "",
-    name: "",
-    surname: "",
-    email: "",
-    password: "",
-  });
+  const [UpdateUserPayload, setUpdateUserPayload] = useState<UpdateUserPayload>(
+    {
+      name: "",
+      surname: "",
+      email: "",
+      password: "",
+    }
+  );
 
   const [error, setError] = useState<string | null>(null);
 
-  // Handle input change
+  const formRef = useRef<HTMLFormElement>(null);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setUpdateUserPayload((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -31,48 +34,48 @@ const RegisterPage: React.FC = () => {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const { name, surname, email, password } = formData;
-    if (!name || !surname || !email || !password) {
-      setError("All fields are required.");
-      return;
-    }
+  const success = await updateUser(UpdateUserPayload);
+  console.log("Updated user:", UpdateUserPayload);
 
-    // Mock API call simulation (this could be replaced with actual API logic)
-    const success = await signup(formData);
-    console.log("Registering user:", formData);
-
-    if (success) {
-      setError(null); // Clear error if validation passes
-      navigate("/"); // Redirect to plans
-    }
+  if (success) {
+    setError(null); // Clear error if validation passes
+    // navigate("/"); // Redirect to plans
+  } else {
+    alert(error)
   }
+  }
+ 
+  useEffect(() => {
+    async function fetchUserData() {
+      const user = await getUser();
+      if (user) {
+        setUpdateUserPayload({
+          name: user.name || "",
+          surname: user.surname || "",
+          email: user.email || "",
+          password: "", 
+        });
+      }
+    }
+
+    fetchUserData();
+  }, [getUser]);
 
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
-      <h2 className="text-center">Register</h2>
 
-      {/* Error message */}
+      <h2 className="text-center">Modyfikuj dane profilu</h2>
+
+      {/* Error message
       {error && (
         <MDBTextArea
           value={error}
           readOnly
           style={{ borderColor: "red", color: "red" }}
         />
-      )}
+      )} */}
 
-      <form onSubmit={handleSubmit}>
-        {/* Login input */}
-        <MDBInput
-          onChange={handleInputChange}
-          wrapperClass="mb-4"
-          label="Login"
-          id="formName"
-          type="text"
-          name="login"
-          value={formData.login}
-          required
-        />
-
+      <form onSubmit={handleSubmit} ref={formRef}>
         {/* Name input */}
         <MDBInput
           onChange={handleInputChange}
@@ -81,8 +84,7 @@ const RegisterPage: React.FC = () => {
           id="formName"
           type="text"
           name="name"
-          value={formData.name}
-          required
+          value={UpdateUserPayload.name}
         />
 
         {/* Surname input */}
@@ -93,8 +95,8 @@ const RegisterPage: React.FC = () => {
           id="formSurname"
           type="text"
           name="surname"
-          value={formData.surname}
-          required
+          value={UpdateUserPayload.surname}
+        
         />
 
         {/* Email input */}
@@ -105,8 +107,8 @@ const RegisterPage: React.FC = () => {
           id="formEmail"
           type="email"
           name="email"
-          value={formData.email}
-          required
+          value={UpdateUserPayload.email}
+          
         />
 
         {/* Password input */}
@@ -117,17 +119,15 @@ const RegisterPage: React.FC = () => {
           id="formPassword"
           type="password"
           name="password"
-          value={formData.password}
-          required
+          value={UpdateUserPayload.password}
+          
         />
 
         {/* Submit Button */}
         <MDBBtn type="submit" className="mb-4" block>
-          Register
+          Modyfikuj
         </MDBBtn>
       </form>
     </MDBContainer>
   );
-};
-
-export default RegisterPage;
+}
