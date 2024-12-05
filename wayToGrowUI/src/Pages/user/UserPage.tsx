@@ -6,17 +6,17 @@ import { IUserWithID } from "../../App.interfaces";
 
 export default function UserPage(): React.ReactElement {
   const navigate = useNavigate();
-  const { updateUser, getUser } = useUserContext();
+  const { updateUser, user } = useUserContext();
 
   // State to manage the form with IUserWithID type
-  const [updateUserPayload, setUpdateUserPayload] = useState<IUserWithID | null>(getUser);
+  const [form, setForm] = useState<IUserWithID>(()=>user);
   const [error, setError] = useState<string | null>(null);
 
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUpdateUserPayload((prevData) => ({
+    setForm((prevData) => ({
       ...prevData!,
       [name]: value,
     }));
@@ -25,15 +25,14 @@ export default function UserPage(): React.ReactElement {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!updateUserPayload) return; // Guard to ensure the state is not null
-
+    if (!form) return; // Guard to ensure the state is not null
 
     try {
-      const success = await updateUser(updateUserPayload);
-      console.log("Updated user:", updateUserPayload);
+      const success = await updateUser(form);
+      console.log("Updated user:", form);
 
       if (success) {
-        setError(null); 
+        setError(null);
       } else {
         setError("Failed to update user.");
       }
@@ -42,24 +41,17 @@ export default function UserPage(): React.ReactElement {
       console.error(error);
     }
   }
-
+  
   useEffect(() => {
-    async function fetchUserData() {
-      try {
-        const user = await getUser(); // Assume this returns an IUserWithID object
-        if (user) {
-          setUpdateUserPayload(user); // Populate state with fetched user data
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
+    if (user) {
+      setForm(user);
     }
+  }, [user]);
 
-    fetchUserData();
-  }, [getUser]); // Only fetch user data once the component mounts
-
+  console.log(form)
   // Guard clause for loading state: return loading UI if data is not yet fetched
-  if (!updateUserPayload) {
+  if (!form) {
+    
     return <div>Loading...</div>;
   }
 
@@ -83,7 +75,7 @@ export default function UserPage(): React.ReactElement {
           id="formName"
           type="text"
           name="name"
-          value={updateUserPayload.name}
+          value={form.name}
         />
 
         {/* Surname input */}
@@ -94,7 +86,7 @@ export default function UserPage(): React.ReactElement {
           id="formSurname"
           type="text"
           name="surname"
-          value={updateUserPayload.surname}
+          value={form.surname}
         />
 
         {/* Email input */}
@@ -105,7 +97,7 @@ export default function UserPage(): React.ReactElement {
           id="formEmail"
           type="email"
           name="email"
-          value={updateUserPayload.email}
+          value={form.email}
         />
 
         {/* Password input */}
@@ -116,7 +108,7 @@ export default function UserPage(): React.ReactElement {
           id="formPassword"
           type="password"
           name="password"
-          value={updateUserPayload.password}
+          value={form.password}
         />
 
         {/* Submit Button */}
@@ -124,6 +116,11 @@ export default function UserPage(): React.ReactElement {
           Modyfikuj
         </MDBBtn>
       </form>
+      <p>
+        {form.name}{' '}
+        {form.login}{' '}
+        ({form.email})
+      </p>
     </MDBContainer>
   );
 }

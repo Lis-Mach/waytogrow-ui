@@ -18,7 +18,13 @@ const PlanContext = createContext<{
   editPlan: (id: number, editedPlan: IPlan) => void;
   deletePlan: (id: number) => void;
   getPlanImage: (id: number) => Promise<string | undefined>;
-}>({ plans: [], addPlan: () => {}, editPlan: () => {}, deletePlan: () => {}, getPlanImage: async () => undefined });
+}>({
+  plans: [],
+  addPlan: () => {},
+  editPlan: () => {},
+  deletePlan: () => {},
+  getPlanImage: async () => undefined,
+});
 
 export function PlanContextProvider({
   children,
@@ -66,8 +72,10 @@ export function PlanContextProvider({
 
   async function getPlanImage(id: number) {
     try {
-      const response = await api.get(`/plan/${id}/image`, { responseType: "blob" });
-      
+      const response = await api.get(`/plan/${id}/image`, {
+        responseType: "blob",
+      });
+
       // Check if the response is a Blob and create an object URL
       if (response.data instanceof Blob) {
         return URL.createObjectURL(response.data);
