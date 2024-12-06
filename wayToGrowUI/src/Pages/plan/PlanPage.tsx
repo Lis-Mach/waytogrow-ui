@@ -1,7 +1,5 @@
 
-import useUserContext from "../../Provider/UserContext";
-import usePlanContext from "../../Provider/PlanContext";
-
+import usePlanContext from "../../providers/PlanContext";
 import React, { useEffect } from "react";
 import {
   MDBContainer,
@@ -12,19 +10,12 @@ import PlanCardList from "./PlanCardList";
 
 
  function PlanPage(): React.ReactElement {
-  const { getUser } = useUserContext();
-  const {plans } = usePlanContext();
 
-  // TODO: wywalic?
-  useEffect(() => {
-    getUser(); 
-  }, []);
-  
+  const {plans } = usePlanContext();
 
 
   return (
     <MDBContainer> 
-      
   <PlanCardList plans= {plans}/>
   </MDBContainer>
   );

@@ -1,18 +1,32 @@
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import api from "../api";
 import { IUserWithID } from "../App.interfaces";
-import { useAuth } from "../Provider/authProvider";
-const emptyUser = {login: "",
+import { useAuth } from "./AuthProvider";
+
+const emptyUser = {
+  login: "",
   password: "",
   name: "",
   surname: "",
   email: "",
-id: 0}
+  id: 0,
+};
+
 const UserContext = createContext<{
   user: IUserWithID;
   getUser: () => Promise<IUserWithID>;
   updateUser: (payload: IUserWithID) => Promise<boolean>;
-}>({ user: emptyUser, getUser: async () => emptyUser, updateUser: async () => false });
+}>({
+  user: emptyUser,
+  getUser: async () => emptyUser,
+  updateUser: async () => false,
+});
 
 export function UserContextProvider({
   children,

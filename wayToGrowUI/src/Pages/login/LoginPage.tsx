@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { MDBContainer, MDBInput, MDBBtn } from "mdb-react-ui-kit";
-import useLoginContext from "../../Provider/LoginContext";
+import useLoginContext from "../../providers/LoginContext";
 import { ILogin } from "../../App.interfaces";
 
 function LoginPage(): React.ReactElement {

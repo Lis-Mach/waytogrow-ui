@@ -1,4 +1,4 @@
-import { MDBAccordionItem,
+import { MDBAccordionItem, 
   MDBCheckbox
  } from "mdb-react-ui-kit";
   import { IStepWithID } from "../../App.interfaces";

@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../Provider/authProvider";
+import { useAuth } from "../../providers/AuthProvider";
 
-import useStepContext from "../../Provider/StepContext";
-
+import useStepContext from "../../providers/StepContext";
 
 import React, { useEffect } from "react";
 import { MDBContainer } from "mdb-react-ui-kit";
@@ -19,11 +18,11 @@ function StepPage(): React.ReactElement {
     if (planId) {
       getSteps(Number(planId)); // Fetch the steps for the given planId
     }
-  }, []); 
+  }, []);
 
   return (
     <MDBContainer>
-        <h6> If step is finished, klick checkbox ...</h6>
+      <h6> If step is finished, klick checkbox ...</h6>
       <StepCardList steps={steps} />
     </MDBContainer>
   );

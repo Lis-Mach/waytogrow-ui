@@ -3,28 +3,26 @@ import {
   createBrowserRouter,
   RouteObject,
 } from "react-router-dom";
-import { useAuth } from "../Provider/authProvider";
+import { useAuth } from "../providers/AuthProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
-import PlanPage from "../Pages/plan/PlanPage";
-import Login from "../Pages/login/LoginPage";
-import StepPage from "../Pages/step/StepPage";
-import UserPage from "../Pages/user/UserPage";
+import PlanPage from "../pages/plan/PlanPage";
+import Login from "../pages/login/LoginPage";
+import StepPage from "../pages/step/StepPage";
+import UserPage from "../pages/user/UserPage";
 
-
-import { LoginContextProvider } from "../Provider/LoginContext";
-import HomePage from "../Pages/home/HomePage";
-import RegisterPage from "../Pages/register/RegisterPage";
-import { UserContextProvider } from "../Provider/UserContext";
-import { PlanContextProvider } from "../Provider/PlanContext";
-import { StepContextProvider } from "../Provider/StepContext";
-import { SignupContextProvider } from "../Provider/SignupContext";
-
+import { LoginContextProvider } from "../providers/LoginContext";
+import HomePage from "../pages/Home/HomePage";
+import RegisterPage from "../pages/register/RegisterPage";
+import { UserContextProvider } from "../providers/UserContext";
+import { PlanContextProvider } from "../providers/PlanContext";
+import { StepContextProvider } from "../providers/StepContext";
+import { SignupContextProvider } from "../providers/SignupContext";
 
 // Define the Routes component with types
 const Routes: React.FC = () => {
   const { token } = useAuth();
 
-   // Define public routes accessible to all users
+  // Define public routes accessible to all users
   // const routesForPublic: RouteObject[] = [
   //   {
   //     path: "/service",
@@ -40,14 +38,14 @@ const Routes: React.FC = () => {
   const routesForAuthenticatedOnly: RouteObject[] = [
     {
       path: "/",
-      element: <ProtectedRoute/> , // Wrap the component in ProtectedRoute
+      element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
       children: [
         {
           path: "/",
           element: (
             <PlanContextProvider>
               <UserContextProvider>
-              <PlanPage />
+                <PlanPage />
               </UserContextProvider>
             </PlanContextProvider>
           ),
@@ -56,7 +54,7 @@ const Routes: React.FC = () => {
           path: "/steps/:planId",
           element: (
             <StepContextProvider>
-                <StepPage />
+              <StepPage />
             </StepContextProvider>
           ),
         },
@@ -64,9 +62,8 @@ const Routes: React.FC = () => {
           path: "/user",
           element: (
             <UserContextProvider>
-                <UserPage />
+              <UserPage />
             </UserContextProvider>
-            
           ),
         },
       ],

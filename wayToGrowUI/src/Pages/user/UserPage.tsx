@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useUserContext from "../../Provider/UserContext";
+import useUserContext from "../../providers/UserContext";
 import React, { useEffect, useState, useRef } from "react";
 import { MDBBtn, MDBContainer, MDBInput } from "mdb-react-ui-kit";
 import { IUserWithID } from "../../App.interfaces";
@@ -9,7 +9,7 @@ export default function UserPage(): React.ReactElement {
   const { updateUser, user } = useUserContext();
 
   // State to manage the form with IUserWithID type
-  const [form, setForm] = useState<IUserWithID>(()=>user);
+  const [form, setForm] = useState<IUserWithID>(() => user);
   const [error, setError] = useState<string | null>(null);
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -41,17 +41,16 @@ export default function UserPage(): React.ReactElement {
       console.error(error);
     }
   }
-  
+
   useEffect(() => {
     if (user) {
       setForm(user);
     }
   }, [user]);
 
-  console.log(form)
+  console.log(form);
   // Guard clause for loading state: return loading UI if data is not yet fetched
   if (!form) {
-    
     return <div>Loading...</div>;
   }
 
@@ -67,6 +66,26 @@ export default function UserPage(): React.ReactElement {
       )}
 
       <form onSubmit={handleSubmit} ref={formRef}>
+        <MDBInput
+          disabled
+          wrapperClass="mb-4"
+          label="Login"
+          id="formName"
+          type="text"
+          name="login"
+          value={form.login}
+        />
+
+        <MDBInput
+          disabled
+          wrapperClass="mb-4"
+          label="Password"
+          id="formName"
+          type="text"
+          name="password"
+          value="***************"
+        />
+
         {/* Name input */}
         <MDBInput
           onChange={handleInputChange}
@@ -100,27 +119,11 @@ export default function UserPage(): React.ReactElement {
           value={form.email}
         />
 
-        {/* Password input */}
-        <MDBInput
-          onChange={handleInputChange}
-          wrapperClass="mb-4"
-          label="Password"
-          id="formPassword"
-          type="password"
-          name="password"
-          value={form.password}
-        />
-
         {/* Submit Button */}
         <MDBBtn type="submit" className="mb-4" block>
           Modyfikuj
         </MDBBtn>
       </form>
-      <p>
-        {form.name}{' '}
-        {form.login}{' '}
-        ({form.email})
-      </p>
     </MDBContainer>
   );
 }

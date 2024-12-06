@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 import api from "../api";
-import { useAuth } from "./authProvider";
+import { useAuth } from "./AuthProvider";
 import { IUser } from "../App.interfaces";
 
 const SignupContext = createContext<{

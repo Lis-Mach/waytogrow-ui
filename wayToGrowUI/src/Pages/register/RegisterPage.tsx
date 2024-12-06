@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { MDBContainer, MDBInput, MDBBtn, MDBTextArea } from "mdb-react-ui-kit"; // Import MDB components
 import { useNavigate } from "react-router-dom";
-import useUserContext from "../../Provider/UserContext";
+
 import { IUser } from "../../App.interfaces";
+import useSignupContext from "../../providers/SignupContext";
 
 const RegisterPage: React.FC = () => {
-  const { signup } = useUserContext();
+  const { signup  } = useSignupContext();
   const navigate = useNavigate();
 
   // State to manage form fields and error messages

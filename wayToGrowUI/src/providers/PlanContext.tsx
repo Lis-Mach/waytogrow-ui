@@ -5,12 +5,18 @@ import {
   useEffect,
   useReducer,
 } from "react";
-import planReducer from "../Reducers/planReducer";
+import planReducer from "../reducers/PlanReducer";
 import api from "../api";
 import { IPlan, IPlanWithID } from "../App.interfaces";
-import { useAuth } from "../Provider/authProvider";
+import { useAuth } from "./AuthProvider";
 
 const initialState: IPlanWithID[] = [];
+
+const emptyPlan = {
+  title: "",
+  subtitle: "",
+  id: 0,
+};
 
 const PlanContext = createContext<{
   plans: IPlanWithID[];
@@ -48,8 +54,13 @@ export function PlanContextProvider({
     }
   }
 
-  function editPlan(id: number, editedPlan: IPlan) {
-    dispatch({ type: "EDIT_PLAN", payload: { ...editedPlan, id } });
+  async function editPlan(id: number, editedPlan: IPlan) {
+    try {
+      await api.put(`/plan/${id}`, editedPlan);
+      dispatch({ type: "EDIT_PLAN", payload: { ...editedPlan, id } });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async function deletePlan(id: number) {
