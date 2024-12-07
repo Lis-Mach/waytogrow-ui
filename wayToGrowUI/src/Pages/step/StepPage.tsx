@@ -1,6 +1,3 @@
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../providers/AuthProvider";
-
 import useStepContext from "../../providers/StepContext";
 
 import React, { useEffect } from "react";
@@ -12,7 +9,7 @@ function StepPage(): React.ReactElement {
   const { planId } = useParams(); // Retrieve the planId from the URL parameters
   const { steps, getSteps } = useStepContext();
 
-  console.log(`PLABID:  ${planId}`);
+  console.log(`PLANID:  ${planId}`);
 
   useEffect(() => {
     if (planId) {

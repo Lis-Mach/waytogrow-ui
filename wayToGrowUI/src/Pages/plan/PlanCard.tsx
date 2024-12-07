@@ -7,6 +7,7 @@ import {
   MDBBtn,
   MDBRipple,
   MDBCol,
+  MDBRow,
 } from "mdb-react-ui-kit";
 import { IPlanWithID } from "../../App.interfaces";
 import React, { useEffect, useState } from "react";
@@ -22,12 +23,11 @@ export default function PlanCard({ plan }: PlanCardProps): React.ReactElement {
   const { getPlanImage } = usePlanContext();
   const navigate = useNavigate();
   const [basicModal, setBasicModal] = useState(false);
-  const [modalTitle, setModalTitle] = useState<string>(''); 
-
+  const [modalTitle, setModalTitle] = useState<string>("");
 
   const toggleOpen = (title: string) => {
     setModalTitle(title);
-    setBasicModal(!basicModal); 
+    setBasicModal(!basicModal);
   };
 
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
@@ -68,6 +68,8 @@ export default function PlanCard({ plan }: PlanCardProps): React.ReactElement {
             } // Fallback image
             fluid
             alt={plan.title}
+            className="img-fluid"
+            style={{ height: "250px", objectFit: "cover" }}
           />
           <a>
             <div
@@ -80,12 +82,29 @@ export default function PlanCard({ plan }: PlanCardProps): React.ReactElement {
           <MDBCardTitle>{plan.title}</MDBCardTitle>
           <MDBCardText>{plan.description}</MDBCardText>
           <>
-            <MDBBtn onClick={handleViewSteps} rippleColor="light">
-              Zobacz
-            </MDBBtn>
-            <MDBBtn onClick={() => toggleOpen(`Modyfikuj plan: ${plan.title}`)} color="secondary" rippleColor="light">
-              Modyfikuj
-            </MDBBtn>
+            <MDBRow className="w-100">
+              <MDBCol>
+                <MDBBtn onClick={handleViewSteps} rippleColor="light">
+                  Zobacz
+                </MDBBtn>
+              </MDBCol>
+            </MDBRow>
+            <MDBRow className="w-100 justify-content-center">
+              <MDBCol md="auto">
+                <MDBBtn onClick={handleViewSteps} rippleColor="light">
+                  Usuń
+                </MDBBtn>
+              </MDBCol>
+              <MDBCol md="auto">
+                <MDBBtn
+                  onClick={() => toggleOpen(`Modyfikuj plan: ${plan.title}`)}
+                  color="secondary"
+                  rippleColor="light"
+                >
+                  Modyfikuj
+                </MDBBtn>
+              </MDBCol>
+            </MDBRow>
           </>
         </MDBCardBody>
       </MDBCard>

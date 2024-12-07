@@ -9,43 +9,39 @@ import {
   MDBModalFooter,
   MDBInput,
 } from "mdb-react-ui-kit";
-import { IPlanWithID } from "../../App.interfaces";
+import  {IStepWithID }from "../../App.interfaces";
 import React, { useEffect, useState, useRef } from "react";
-import usePlanContext from "../../providers/PlanContext";
+import useStepContext from "../../providers/StepContext";
 
 interface ModalComponentProps {
-  planWithId: IPlanWithID;
+  planWithId: IStepWithID;
   isOpen: boolean;
   toggleOpen: () => void;
   title: string;
   actionType: "edit" | "create";
 }
 
-export default function ModalForPlanModfication({
-  planWithId,
+export default function ModalForStepModfication({
+  stepWithId,
   isOpen,
   toggleOpen,
   title,
   actionType,
 }: ModalComponentProps): React.ReactElement {
-  const { editPlan, addPlan, setPlanImage } = usePlanContext();
+  const {editStep, addStep } = useStepContext();
 
-  //State to manage the form with IUserWithID type
-  const [form, setForm] = useState<IPlanWithID>(() => planWithId);
+  //State to manage the form with IStepWithID type
+  const [form, setForm] = useState<IStepWithID>(() => stepWithId);
 
   const formRef = useRef<HTMLFormElement>(null);
-  const emptyPlanWithId = { title: "", description: "", image: "", id: 0 };
-
-  const [file, setFile] = useState<string | undefined>();
+  const emptyStepWithId = { title: "", subtitle: "", id: 0 , order: 0, status: false, };
 
   useEffect(() => {
     if (isOpen) {
-      if (actionType === "edit" && planWithId) {
-        setForm(planWithId); // Set form data when editing an existing plan
-        setFile(undefined)
+      if (actionType === "edit" && stepWithId) {
+        setForm(stepWithId); // Set form data when editing an existing plan
       } else {
-        setForm(emptyPlanWithId); // Default state for createPlan
-        setFile(undefined)
+        setForm(emptyStepWithId); // Default state for createPlan
       }
     }
   }, [isOpen]);
@@ -65,33 +61,16 @@ export default function ModalForPlanModfication({
 
     if (actionType === "edit") {
       // Edit existing plan
-      await editPlan(form.id, form);
-      console.log("Updated plan:", form);
+      await editStep(form.id, form);
+      console.log("Updated step:", form);
     } else {
       // Create a new plan
-      await addPlan(form);
-      console.log("Created new plan:", form);
+      await addStep(form);
+      console.log("Created new step:", form);
     }
-
-
-    const formData = new FormData();
-    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-    const selectedFile = fileInput?.files?.[0]; // Get the file from input
-
-    if (selectedFile) {
-      formData.append('file', selectedFile);
-      await setPlanImage(form.id, formData);
-    }
-      
 
     toggleOpen();
   }
-
-  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.files && e.target.files[0]) {
-        setFile(URL.createObjectURL(e.target.files[0]));
-    }
-}
 
   console.log(form);
   // Guard clause for loading state: return loading UI if data is not yet fetched
@@ -123,26 +102,20 @@ export default function ModalForPlanModfication({
                 value={form.title}
               />
 
-               <MDBInput
+              {/* { Surname input } */}
+              <MDBInput
                 onChange={handleInputChange}
                 wrapperClass="mb-4"
                 label="Opis"
                 id="description"
                 type="text"
                 name="description"
-                value={form.description}
+                value={form.subtitle}
               />
+
             </form>
-               {/* { image input } */}
-               <MDBInput
-                onChange={handleImageChange}
-                wrapperClass="mb-4"
-                id="image"
-                type="file"
-                name="image"
-              />
-              {file && <img src={file} alt="Uploaded" />}
           </MDBModalBody>
+
 
           <MDBModalFooter>
             <MDBBtn color="secondary" block onClick={toggleOpen}>

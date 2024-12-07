@@ -31,7 +31,7 @@ export interface IStep{
     plan_id: number;
     title: string;
     subtitle: string;
-    description: string;
+    status: boolean;
 }
 
 export interface IStepWithID extends IStep{

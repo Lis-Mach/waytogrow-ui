@@ -23,7 +23,9 @@ export default function PlanCardList({
 
   return (
     <div>
-      <MDBBtn onClick={() => toggleOpen('Utwórz nowy')} rippleColor="light">Utwórz NOWY</MDBBtn>
+      <MDBBtn onClick={() => toggleOpen("Utwórz nowy")} rippleColor="light">
+        Utwórz NOWY
+      </MDBBtn>
       <h1></h1>
       <ModalForPlanModfication
         planWithId={emptyPlanWithId}

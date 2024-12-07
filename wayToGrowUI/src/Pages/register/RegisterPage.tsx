@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { IUser } from "../../App.interfaces";
 import useSignupContext from "../../providers/SignupContext";
 
-const RegisterPage: React.FC = () => {
-  const { signup  } = useSignupContext();
+
+function RegisterPage(): React.ReactElement {
+  const { signup } = useSignupContext();
   const navigate = useNavigate();
 
   // State to manage form fields and error messages

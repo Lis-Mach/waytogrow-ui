@@ -12,24 +12,20 @@ import { useAuth } from "./AuthProvider";
 
 const initialState: IPlanWithID[] = [];
 
-const emptyPlan = {
-  title: "",
-  subtitle: "",
-  id: 0,
-};
-
 const PlanContext = createContext<{
   plans: IPlanWithID[];
   addPlan: (newPlan: IPlan) => void;
   editPlan: (id: number, editedPlan: IPlan) => void;
   deletePlan: (id: number) => void;
   getPlanImage: (id: number) => Promise<string | undefined>;
+  setPlanImage: (id: number, formData: FormData) => void;
 }>({
   plans: [],
   addPlan: () => {},
   editPlan: () => {},
   deletePlan: () => {},
   getPlanImage: async () => undefined,
+  setPlanImage: async () => {},
 });
 
 export function PlanContextProvider({
@@ -99,13 +95,32 @@ export function PlanContextProvider({
     }
   }
 
+  async function setPlanImage(id: number, formData: FormData) {
+    try {
+      // Replace with your API endpoint
+      const response = await api.put(
+        `/plan/${id}/image`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("File uploaded successfully:", response.data);
+    } catch (err) {
+      console.error("Error uploading file:", err);
+    }
+  }
+
   useEffect(() => {
     getPlans();
   }, []);
 
   return (
     <PlanContext.Provider
-      value={{ plans: state, addPlan, editPlan, deletePlan, getPlanImage }}
+      value={{ plans: state, addPlan, editPlan, deletePlan, getPlanImage, setPlanImage }}
     >
       {children}
     </PlanContext.Provider>

@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useMemo, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  ReactNode,
+} from "react";
 import api from "../api";
 
 // Define the type for the context value
@@ -16,24 +23,25 @@ interface AuthProviderProps {
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // State to hold the authentication token
-  const [token, setToken_] = useState<string | null>(localStorage.getItem("token"));
+  const [token, setToken_] = useState<string | null>(
+    localStorage.getItem("token")
+  );
 
   // Function to set the authentication token
   const setToken = (token: string | null) => {
-    setToken_(token)
+    setToken_(token);
   };
 
   useEffect(() => {
     if (token) {
-      api.defaults.headers.common['Authorization'] = "Bearer " + token;
-      api.defaults.headers.post['Content-Type'] = 'application/json';
+      api.defaults.headers.common["Authorization"] = "Bearer " + token;
+      api.defaults.headers.post["Content-Type"] = "application/json";
       localStorage.setItem("token", token);
     } else {
       delete api.defaults.headers.common["Authorization"];
       localStorage.removeItem("token");
     }
-    console.log('Axios default headers:', api.defaults.headers);
-
+    console.log("Axios default headers:", api.defaults.headers);
   }, [token]);
 
   // Memoized value of the authentication context
