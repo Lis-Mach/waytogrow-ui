@@ -7,7 +7,6 @@ import {
   MDBBtn,
   MDBRipple,
   MDBCol,
-  MDBRow,
 } from "mdb-react-ui-kit";
 import { IPlanWithID } from "../../App.interfaces";
 import React, { useEffect, useState } from "react";
@@ -17,10 +16,14 @@ import ModalForPlanModfication from "./ModalForPlanModification";
 
 interface PlanCardProps {
   plan: IPlanWithID;
+  updatePlan: (updatedPlan: IPlanWithID) => void;
 }
 
-export default function PlanCard({ plan }: PlanCardProps): React.ReactElement {
-  const { getPlanImage } = usePlanContext();
+export default function PlanCard({
+  plan,
+  updatePlan,
+}: PlanCardProps): React.ReactElement {
+  const { getPlanImage, deletePlan } = usePlanContext();
   const navigate = useNavigate();
   const [basicModal, setBasicModal] = useState(false);
   const [modalTitle, setModalTitle] = useState<string>("");
@@ -46,6 +49,14 @@ export default function PlanCard({ plan }: PlanCardProps): React.ReactElement {
     navigate(`/steps/${plan.id}`); // Navigate to /steps/:planId
   };
 
+  const handlePlanModification = (modifiedPlan: IPlanWithID) => {
+    updatePlan(modifiedPlan);
+  };
+
+  const handleDelete = () => {
+    deletePlan(plan.id);
+  };
+
   return (
     <MDBCol md="4">
       <ModalForPlanModfication
@@ -54,6 +65,7 @@ export default function PlanCard({ plan }: PlanCardProps): React.ReactElement {
         toggleOpen={() => toggleOpen(modalTitle)}
         title={modalTitle}
         actionType="edit"
+        onPlanModified={handlePlanModification}
       />
       <MDBCard>
         <MDBRipple
@@ -65,7 +77,7 @@ export default function PlanCard({ plan }: PlanCardProps): React.ReactElement {
             src={
               imageSrc ||
               "https://mdbootstrap.com/img/new/standard/nature/111.webp"
-            } // Fallback image
+            }
             fluid
             alt={plan.title}
             className="img-fluid"
@@ -82,29 +94,23 @@ export default function PlanCard({ plan }: PlanCardProps): React.ReactElement {
           <MDBCardTitle>{plan.title}</MDBCardTitle>
           <MDBCardText>{plan.description}</MDBCardText>
           <>
-            <MDBRow className="w-100">
-              <MDBCol>
-                <MDBBtn onClick={handleViewSteps} rippleColor="light">
-                  Zobacz
-                </MDBBtn>
-              </MDBCol>
-            </MDBRow>
-            <MDBRow className="w-100 justify-content-center">
-              <MDBCol md="auto">
-                <MDBBtn onClick={handleViewSteps} rippleColor="light">
-                  Usuń
-                </MDBBtn>
-              </MDBCol>
-              <MDBCol md="auto">
-                <MDBBtn
-                  onClick={() => toggleOpen(`Modyfikuj plan: ${plan.title}`)}
-                  color="secondary"
-                  rippleColor="light"
-                >
-                  Modyfikuj
-                </MDBBtn>
-              </MDBCol>
-            </MDBRow>
+            <div className="d-grid gap-2">
+              <MDBBtn onClick={handleDelete} color="danger">
+                Usuń
+              </MDBBtn>
+
+              <MDBBtn
+                onClick={() => toggleOpen(`Modyfikuj plan: ${plan.title}`)}
+                color="secondary"
+                rippleColor="secondary"
+              >
+                Modyfikuj
+              </MDBBtn>
+
+              <MDBBtn onClick={handleViewSteps} rippleColor="light">
+                Zobacz
+              </MDBBtn>
+            </div>
           </>
         </MDBCardBody>
       </MDBCard>

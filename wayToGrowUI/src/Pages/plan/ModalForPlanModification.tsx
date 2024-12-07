@@ -19,6 +19,7 @@ interface ModalComponentProps {
   toggleOpen: () => void;
   title: string;
   actionType: "edit" | "create";
+  onPlanModified: (modifiedPlan: IPlanWithID) => void; 
 }
 
 export default function ModalForPlanModfication({
@@ -27,6 +28,7 @@ export default function ModalForPlanModfication({
   toggleOpen,
   title,
   actionType,
+  onPlanModified
 }: ModalComponentProps): React.ReactElement {
   const { editPlan, addPlan, setPlanImage } = usePlanContext();
 
@@ -83,8 +85,8 @@ export default function ModalForPlanModfication({
       await setPlanImage(form.id, formData);
     }
       
-
     toggleOpen();
+    onPlanModified(form)
   }
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -140,8 +142,10 @@ export default function ModalForPlanModfication({
                 id="image"
                 type="file"
                 name="image"
+                accept="image/*"
               />
-              {file && <img src={file} alt="Uploaded" />}
+              {file && <img className="img-fluid"
+            style={{ height: "250px", objectFit: "cover" }} src={file} alt="Uploaded" />}
           </MDBModalBody>
 
           <MDBModalFooter>

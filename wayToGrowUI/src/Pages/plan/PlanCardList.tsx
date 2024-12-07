@@ -5,20 +5,28 @@ import ModalForPlanModfication from "./ModalForPlanModification";
 import React, { useState } from "react";
 
 interface PlanCardListProps {
-  plans: IPlanWithID[]; // Ensure 'plans' is an array of 'IPlanWithID'
+  plans: IPlanWithID[];
+  updatePlan: (updatedPlan: IPlanWithID) => void;
 }
 
 export default function PlanCardList({
   plans,
+  updatePlan,
 }: PlanCardListProps): React.ReactElement {
   console.log(plans);
   const [basicModal, setBasicModal] = useState(false);
   const [modalTitle, setModalTitle] = useState<string>("");
   const emptyPlanWithId = { title: "", description: "", image: "", id: 0 };
+  const [currentPlan, setCurrentPlan] = useState<IPlanWithID | null>(null);
 
-  const toggleOpen = (title: string) => {
+  const toggleOpen = (title: string, plan?: IPlanWithID) => {
     setModalTitle(title);
+    setCurrentPlan(plan || null);
     setBasicModal(!basicModal); // Toggle the modal visibility
+  };
+
+  const handlePlanModification = (modifiedPlan: IPlanWithID) => {
+    updatePlan(modifiedPlan);
   };
 
   return (
@@ -33,10 +41,15 @@ export default function PlanCardList({
         toggleOpen={() => toggleOpen(modalTitle)}
         title={modalTitle}
         actionType="create"
+        onPlanModified={handlePlanModification}
       />
       <MDBRow>
         {plans.map((plan) => (
-          <PlanCard key={plan.id} plan={plan}></PlanCard>
+          <PlanCard
+            key={plan.id}
+            plan={plan}
+            updatePlan={updatePlan}
+          ></PlanCard>
         ))}
       </MDBRow>
     </div>
