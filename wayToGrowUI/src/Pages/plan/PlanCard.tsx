@@ -80,7 +80,6 @@ export default function PlanCard({
             }
             fluid
             alt={plan.title}
-            className="img-fluid"
             style={{ height: "250px", objectFit: "cover" }}
           />
           <a>

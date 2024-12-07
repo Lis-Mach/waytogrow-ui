@@ -1,7 +1,7 @@
 import useStepContext from "../../providers/StepContext";
 
 import React, { useEffect } from "react";
-import { MDBContainer } from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn } from "mdb-react-ui-kit";
 import StepCardList from "./StepCardList";
 import { useParams } from "react-router-dom";
 
@@ -17,9 +17,17 @@ function StepPage(): React.ReactElement {
     }
   }, []);
 
+  const toggleOpen = (title: string) => {
+    // setModalTitle(title);
+    // setBasicModal(!basicModal);
+  };
+
   return (
     <MDBContainer>
-      <h6> If step is finished, klick checkbox ...</h6>
+      <MDBBtn onClick={() => toggleOpen("Utwórz nowy")} rippleColor="light">
+        Utwórz NOWY
+      </MDBBtn>
+      <h1></h1>
       <StepCardList steps={steps} />
     </MDBContainer>
   );
