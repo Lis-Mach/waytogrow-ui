@@ -71,7 +71,7 @@ export default function ModalForPlanModfication({
       console.log("Updated plan:", form);
     } else {
       // Create a new plan
-      await addPlan(form);
+      form.id = await addPlan(form);
       console.log("Created new plan:", form);
     }
 

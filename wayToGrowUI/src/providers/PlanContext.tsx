@@ -14,14 +14,14 @@ const initialState: IPlanWithID[] = [];
 
 const PlanContext = createContext<{
   plans: IPlanWithID[];
-  addPlan: (newPlan: IPlan) => void;
+  addPlan: (newPlan: IPlan) => Promise<number>;
   editPlan: (id: number, editedPlan: IPlan) => void;
   deletePlan: (id: number) => void;
   getPlanImage: (id: number) => Promise<string | undefined>;
   setPlanImage: (id: number, formData: FormData) => void;
 }>({
   plans: [],
-  addPlan: () => {},
+  addPlan: async () => 0,
   editPlan: () => {},
   deletePlan: () => {},
   getPlanImage: async () => undefined,
@@ -45,8 +45,10 @@ export function PlanContextProvider({
     try {
       const resposne = await api.post("/plan", newPlan);
       dispatch({ type: "ADD_PLAN", payload: resposne.data });
+      return resposne.data.id
     } catch (error) {
       console.error(error);
+      return 0;
     }
   }
 
