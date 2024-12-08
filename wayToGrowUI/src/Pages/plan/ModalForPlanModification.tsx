@@ -82,7 +82,7 @@ export default function ModalForPlanModfication({
 
     if (selectedFile) {
       formData.append('file', selectedFile);
-      await setPlanImage(form.id, formData);
+      await setPlanImage(form.id, formData)
     }
       
     toggleOpen();

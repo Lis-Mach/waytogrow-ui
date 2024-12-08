@@ -17,17 +17,20 @@ export default function PlanCardList({
   const [basicModal, setBasicModal] = useState(false);
   const [modalTitle, setModalTitle] = useState<string>("");
   const emptyPlanWithId = { title: "", description: "", image: "", id: 0 };
-  const [currentPlan, setCurrentPlan] = useState<IPlanWithID | null>(null);
 
-  const toggleOpen = (title: string, plan?: IPlanWithID) => {
+  const toggleOpen = (title: string) => {
     setModalTitle(title);
-    setCurrentPlan(plan || null);
     setBasicModal(!basicModal); // Toggle the modal visibility
   };
 
   const handlePlanModification = (modifiedPlan: IPlanWithID) => {
-    updatePlan(modifiedPlan);
+    setTimeout(() => { 
+      updatePlan(modifiedPlan);
+    }, 1000)
+    
   };
+
+ 
 
   return (
     <div>
