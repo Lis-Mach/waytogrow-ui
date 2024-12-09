@@ -8,6 +8,7 @@ import {
   MDBModalBody,
   MDBModalFooter,
   MDBInput,
+  MDBSwitch,
 } from "mdb-react-ui-kit";
 import { IStepWithID } from "../../App.interfaces";
 import React, { useEffect, useState, useRef } from "react";
@@ -20,7 +21,7 @@ interface ModalComponentProps {
   title: string;
   actionType: "edit" | "create";
   onStepModified: (modifiedStep: IStepWithID) => void;
-  planId: number
+  planId: number;
 }
 
 export default function ModalForStepModfication({
@@ -30,7 +31,7 @@ export default function ModalForStepModfication({
   title,
   actionType,
   onStepModified,
-  planId
+  planId,
 }: ModalComponentProps): React.ReactElement {
   const { editStep, addStep } = useStepContext();
 
@@ -58,11 +59,18 @@ export default function ModalForStepModfication({
   }, [isOpen]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((prevData) => ({
-      ...prevData!,
-      [name]: value,
-    }));
+    const { name, type, checked, value } = e.target;
+    if (type === "checkbox") {
+      setForm((prevData) => ({
+        ...prevData!,
+        [name]: checked, // Set the status to true/false based on checked
+      }));
+    } else {
+      setForm((prevData) => ({
+        ...prevData!,
+        [name]: value, // For regular inputs
+      }));
+    }
   };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -96,11 +104,7 @@ export default function ModalForStepModfication({
         <MDBModalContent>
           <MDBModalHeader>
             <MDBModalTitle>{title}</MDBModalTitle>
-            <MDBBtn
-              className="btn-close"
-              color="none"
-              onClick={toggleOpen}
-            />
+            <MDBBtn className="btn-close" color="none" onClick={toggleOpen} />
           </MDBModalHeader>
           <MDBModalBody>
             <form id="stepForm" onSubmit={handleSubmit} ref={formRef}>
@@ -113,8 +117,6 @@ export default function ModalForStepModfication({
                 name="title"
                 value={form.title}
               />
-
-              {/* { Surname input } */}
               <MDBInput
                 onChange={handleInputChange}
                 wrapperClass="mb-4"
@@ -124,6 +126,16 @@ export default function ModalForStepModfication({
                 name="subtitle"
                 value={form.subtitle}
               />
+
+              <section className="d-flex justify-content-center mb-4">
+                <MDBSwitch
+                  id="status"
+                  label="Gotowe"
+                  name="status"
+                  checked={form.status}
+                  onChange={handleInputChange}
+                />
+              </section>
             </form>
           </MDBModalBody>
 

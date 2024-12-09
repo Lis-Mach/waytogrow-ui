@@ -48,9 +48,11 @@ export default function StepCard({
         <td> {step.title}</td>
         <td> {step.subtitle}</td>
         <td>
-          {" "}
-          {step.status}
-          <MDBIcon far icon="check-square" size="2x" iconType="solid" />
+          {step.status ? (
+            <MDBIcon far icon="check-square" size="2x" iconType="solid" />
+          ) : (
+            <span>Zrób to</span> // Display something else if needed
+          )}
         </td>
         <td>
           <MDBBtn

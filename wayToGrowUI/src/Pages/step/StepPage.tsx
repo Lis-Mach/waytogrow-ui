@@ -1,7 +1,11 @@
 import useStepContext from "../../providers/StepContext";
 import ModalForStepModfication from "./ModalForStepModification";
 import React, { useEffect, useState } from "react";
-import { MDBContainer, MDBBtn } from "mdb-react-ui-kit";
+import { MDBContainer, 
+  MDBBtn,
+  MDBProgress,
+  MDBProgressBar
+ } from "mdb-react-ui-kit";
 import StepCardList from "./StepCardList";
 import { useParams } from "react-router-dom";
 import { IStepWithID } from "../../App.interfaces";
@@ -51,6 +55,11 @@ function StepPage(): React.ReactElement {
     updateStep(modifiedStep);
   };
  
+   // Calculate the percentage of steps with status: true
+   const totalSteps = uSteps.length;
+   const completedSteps = uSteps.filter((step) => step.status).length;
+   const progressPercentage = totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
+ 
   
   return (
     <MDBContainer>
@@ -68,6 +77,14 @@ function StepPage(): React.ReactElement {
         onStepModified={handleStepModification}
         planId={Number(planId)}
       />
+      <h1></h1>
+      {/* Progress Bar */}
+      <MDBProgress height="20">
+        <MDBProgressBar width={progressPercentage} valuemin={0} valuemax={100}>
+          {Math.round(progressPercentage)}%
+        </MDBProgressBar>
+      </MDBProgress>
+
       <h1></h1>
       <StepCardList steps={uSteps} updateStep={updateStep} />
     </MDBContainer>
