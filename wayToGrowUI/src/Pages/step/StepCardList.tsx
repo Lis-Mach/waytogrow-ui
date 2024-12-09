@@ -14,7 +14,14 @@ export default function StepCardList({
   console.log(steps);
 
   return (
-    <div className="table-responsive" style={{ maxHeight: "60lvh" }}>
+    <div
+      className="table-responsive"
+      style={{
+        height: "60vh", // Fixed height for the container
+        overflowY: "auto", // Enable vertical scrolling when the content overflows
+        display: "block", // Make the table scrollable by limiting its height
+      }}
+    >
       <MDBTable align="middle" className="table table-striped">
         <MDBTableHead className="table-dark sticky-top">
           <tr>
@@ -27,11 +34,7 @@ export default function StepCardList({
 
         <MDBTableBody className="scrollable-body">
           {steps.map((step) => (
-            <StepCard
-              key={step.id}
-              step={step}
-              updateStep={updateStep}
-            />
+            <StepCard key={step.id} step={step} updateStep={updateStep} />
           ))}
         </MDBTableBody>
       </MDBTable>
