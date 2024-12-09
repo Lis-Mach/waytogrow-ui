@@ -1,40 +1,66 @@
-import { MDBAccordionItem, MDBCheckbox, MDBIcon } from "mdb-react-ui-kit";
+import {  MDBBtn,MDBIcon } from "mdb-react-ui-kit";
 import { IStepWithID } from "../../App.interfaces";
-import { useParams } from "react-router-dom";
-import { useState } from "react";
+
+import { useState,  } from "react";
+import useStepContext from "../../providers/StepContext";
+
+import ModalForStepModfication from "./ModalForStepModification";
 
 interface StepCardProps {
   step: IStepWithID;
+   updateStep: (updatedStep: IStepWithID) => void;
 }
 
-export default function StepCard({ step }: StepCardProps): React.ReactElement {
-  // useEffect(() => {
-  //   if (planId) {
-  //   }
-  // }, []);
+export default function StepCard({
+   step,
+ updateStep,
+   }: StepCardProps): React.ReactElement {
 
-  const [checked, setChecked] = useState(false);
+    const {deleteStep } = useStepContext();
+   
+    const [basicModal, setBasicModal] = useState(false);
+    const [modalTitle, setModalTitle] = useState<string>("");
+  
+
+    const toggleOpen = (title: string) => {
+      setModalTitle(title);
+      setBasicModal(!basicModal);
+    };
+
+  
+    const handleStepModification = (modifiedStep: IStepWithID) => {
+      updateStep(modifiedStep);
+    };
+  
+    const handleDelete = () => {
+      deleteStep(step.id );
+    };
+
 
   return (
-    <MDBAccordionItem
-      collapseId={step.order}
-      headerTitle={
-        <>
-        <MDBIcon icon="fa-regular fa-thumbs-up"/>
-          {/* <MDBCheckbox
-            id="controlledCheckbox"
-            checked={checked}
-            onChange={() => setChecked(!checked)}
-          />{" "} */}
-          &nbsp; &nbsp; {step.title}
-        </>
-      }
-    >
-      {step.subtitle}
-    </MDBAccordionItem>
+    <>
+     <ModalForStepModfication
+        stepWithId={step}
+        isOpen={basicModal}
+        toggleOpen={() => toggleOpen(modalTitle)}
+        title={modalTitle}
+        actionType="edit"
+        onStepModified={handleStepModification}
+      />
+     <tr>
+     <td> {step.title}</td>
+              <td> {step.subtitle}</td>
+              <td> {step.status}
+                <MDBIcon far icon="check-square" size='2x' iconType='solid'/></td>
+              <td>
+                <MDBBtn onClick={handleDelete} block color="danger"  rippleColor="secondary">Usuń</MDBBtn>
+                <h2></h2>
+                <MDBBtn
+                 onClick={() => toggleOpen(`Modyfikuj step: ${step.title}`)}
+                block rippleColor="secondary"color="secondary" >Modyfikuj</MDBBtn>
+              </td> 
+              </tr>
+              </>
   );
 }
 
-// <MDBListGroupItem tag='label'>
-//       <MDBCheckbox label={step.title} />
-//     </MDBListGroupItem>

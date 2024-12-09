@@ -9,16 +9,17 @@ import {
   MDBModalFooter,
   MDBInput,
 } from "mdb-react-ui-kit";
-import  {IStepWithID }from "../../App.interfaces";
+import { IStepWithID } from "../../App.interfaces";
 import React, { useEffect, useState, useRef } from "react";
 import useStepContext from "../../providers/StepContext";
 
 interface ModalComponentProps {
-  planWithId: IStepWithID;
+  stepWithId: IStepWithID;
   isOpen: boolean;
   toggleOpen: () => void;
   title: string;
   actionType: "edit" | "create";
+  onStepModified: (modifiedStep: IStepWithID) => void;
 }
 
 export default function ModalForStepModfication({
@@ -27,14 +28,22 @@ export default function ModalForStepModfication({
   toggleOpen,
   title,
   actionType,
+  onStepModified,
 }: ModalComponentProps): React.ReactElement {
-  const {editStep, addStep } = useStepContext();
+  const { editStep, addStep } = useStepContext();
 
   //State to manage the form with IStepWithID type
   const [form, setForm] = useState<IStepWithID>(() => stepWithId);
 
   const formRef = useRef<HTMLFormElement>(null);
-  const emptyStepWithId = { title: "", subtitle: "", id: 0 , order: 0, status: false, };
+  const emptyStepWithId = {
+    title: "",
+    subtitle: "",
+    id: 0,
+    order: 0,
+    status: false,
+    plan_id: 0,
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -70,6 +79,7 @@ export default function ModalForStepModfication({
     }
 
     toggleOpen();
+    onStepModified(form);
   }
 
   console.log(form);
@@ -91,7 +101,7 @@ export default function ModalForStepModfication({
             ></MDBBtn>
           </MDBModalHeader>
           <MDBModalBody>
-            <form id="planForm" onSubmit={handleSubmit} ref={formRef}>
+            <form id="stepForm" onSubmit={handleSubmit} ref={formRef}>
               <MDBInput
                 onChange={handleInputChange}
                 wrapperClass="mb-4"
@@ -107,21 +117,19 @@ export default function ModalForStepModfication({
                 onChange={handleInputChange}
                 wrapperClass="mb-4"
                 label="Opis"
-                id="description"
+                id="subtitle"
                 type="text"
-                name="description"
+                name="subtitle"
                 value={form.subtitle}
               />
-
             </form>
           </MDBModalBody>
-
 
           <MDBModalFooter>
             <MDBBtn color="secondary" block onClick={toggleOpen}>
               Close
             </MDBBtn>
-            <MDBBtn type="submit" form="planForm" className="mb-4" block>
+            <MDBBtn type="submit" form="stepForm" className="mb-4" block>
               Save changes
             </MDBBtn>
           </MDBModalFooter>

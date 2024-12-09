@@ -16,6 +16,7 @@ export default function PlanCardList({
   console.log(plans);
   const [basicModal, setBasicModal] = useState(false);
   const [modalTitle, setModalTitle] = useState<string>("");
+  
   const emptyPlanWithId = { title: "", description: "", image: "", id: 0 };
 
   const toggleOpen = (title: string) => {

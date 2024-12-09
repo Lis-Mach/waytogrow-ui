@@ -14,13 +14,13 @@ const initialState: IStepWithID[] = [];
 
 const StepContext = createContext<{
   steps: IStepWithID[];
-  addStep: (newPlan: IStep) => void;
-  editStep: (id: number, editedPlan: IStep) => void;
+  addStep: (newPlan: IStep) => Promise<number>;
+  editStep: (id: number, editedStep: IStep) => void;
   deleteStep: (id: number) => void;
   getSteps: (planId: number) => void;
 }>({
   steps: [],
-  addStep: () => {},
+  addStep: async () => 0,
   editStep: () => {},
   deleteStep: () => {},
   getSteps: () => {},
@@ -41,10 +41,11 @@ export function StepContextProvider({
 
   async function addStep(newStep: IStep) {
     try {
-      const resposne = await api.post("/step", newStep);
+      const resposne = await api.post("/plan/${id}/step", newStep);
       dispatch({ type: "ADD_STEP", payload: resposne.data });
     } catch (error) {
       console.error(error);
+      return 0;
     }
   }
 
