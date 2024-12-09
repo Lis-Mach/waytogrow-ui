@@ -31,8 +31,6 @@ export default function PlanCardList({
     
   };
 
- 
-
   return (
     <div>
       <MDBBtn onClick={() => toggleOpen("Utwórz nowy")} rippleColor="light">

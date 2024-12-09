@@ -5,7 +5,7 @@ import {
   useEffect,
   useReducer,
 } from "react";
-import planReducer from "../reducers/PlanReducer";
+import planReducer from "../reducers/planReducer";
 import api from "../api";
 import { IPlan, IPlanWithID } from "../App.interfaces";
 import { useAuth } from "./AuthProvider";

@@ -27,7 +27,7 @@ export default function FooterDetails() {
             </MDBCol>
 
             <MDBCol md="2" lg="2" xl="2" className="mx-auto mb-4">
-              <h6 className="text-uppercase fw-bold mb-4">Nasze mozliwości</h6>
+              <h6 className="text-uppercase fw-bold mb-4">Nasze możliwości</h6>
               <p>
                 <a href="#!" className="text-reset">
                   Plan treningów do maratonu
@@ -35,7 +35,7 @@ export default function FooterDetails() {
               </p>
               <p>
                 <a href="#!" className="text-reset">
-                  Plan rozwoju ściezki kariery
+                  Plan rozwoju ścieżki kariery
                 </a>
               </p>
               <p>
@@ -46,7 +46,7 @@ export default function FooterDetails() {
             </MDBCol>
 
             <MDBCol md="3" lg="2" xl="2" className="mx-auto mb-4">
-              <h6 className="text-uppercase fw-bold mb-4">Uzyteczne linki</h6>
+              <h6 className="text-uppercase fw-bold mb-4">Użyteczne linki</h6>
 
               <p>
                 <a href="#!" className="text-reset">

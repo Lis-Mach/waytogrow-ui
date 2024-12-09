@@ -5,7 +5,7 @@ import {
   useEffect,
   useReducer,
 } from "react";
-import stepReducer from "../reducers/StepReducer";
+import stepReducer from "../reducers/stepReducer";
 import api from "../api";
 import { IStep, IStepWithID } from "../App.interfaces";
 import { useAuth } from "./AuthProvider";
@@ -14,9 +14,9 @@ const initialState: IStepWithID[] = [];
 
 const StepContext = createContext<{
   steps: IStepWithID[];
-  addStep: (newPlan: IStep) => Promise<number>;
-  editStep: (id: number, editedStep: IStep) => void;
-  deleteStep: (id: number) => void;
+  addStep: (planId: number, newPlan: IStep) => Promise<number>;
+  editStep: (planId: number, stepId: number, editedStep: IStep) => void;
+  deleteStep: (planId: number, stepId: number) => void;
   getSteps: (planId: number) => void;
 }>({
   steps: [],
@@ -39,24 +39,30 @@ export function StepContextProvider({
     }
   }, [token]);
 
-  async function addStep(newStep: IStep) {
+  async function addStep( planId: number, newStep: IStep) {
     try {
-      const resposne = await api.post("/plan/${id}/step", newStep);
-      dispatch({ type: "ADD_STEP", payload: resposne.data });
+      const resposne = await api.post(`/plan/${planId}/step`, newStep);
+      dispatch({ type: "ADD_STEP", payload: resposne.data.data});
+      return resposne.data.data.id
     } catch (error) {
       console.error(error);
       return 0;
     }
   }
 
-  function editStep(id: number, editedStep: IStep) {
-    dispatch({ type: "EDIT_STEP", payload: { ...editedStep, id } });
+  async function editStep(planId: number, id: number, editedStep: IStep) {
+    try {
+      await api.put(`plan/${planId}/step/${id}`, editedStep);
+      dispatch({ type: "EDIT_STEP", payload: { ...editedStep, id } });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  async function deleteStep(id: number) {
+  async function deleteStep(planId: number, id: number) {
     try {
-      await api.delete(`/step/${id}`);
-      dispatch({ type: "DELETE_STEP", payload: { id } });
+      await api.delete(`plan/${planId}/step/${id}`);
+      dispatch({ type: "DELETE_STEP", payload: {  id } });
     } catch (error) {
       console.error(error);
     }

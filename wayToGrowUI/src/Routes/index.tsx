@@ -44,9 +44,7 @@ const Routes: React.FC = () => {
           path: "/",
           element: (
             <PlanContextProvider>
-              <UserContextProvider>
                 <PlanPage />
-              </UserContextProvider>
             </PlanContextProvider>
           ),
         },

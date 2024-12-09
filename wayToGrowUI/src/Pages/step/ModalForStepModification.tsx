@@ -20,6 +20,7 @@ interface ModalComponentProps {
   title: string;
   actionType: "edit" | "create";
   onStepModified: (modifiedStep: IStepWithID) => void;
+  planId: number
 }
 
 export default function ModalForStepModfication({
@@ -29,6 +30,7 @@ export default function ModalForStepModfication({
   title,
   actionType,
   onStepModified,
+  planId
 }: ModalComponentProps): React.ReactElement {
   const { editStep, addStep } = useStepContext();
 
@@ -70,11 +72,11 @@ export default function ModalForStepModfication({
 
     if (actionType === "edit") {
       // Edit existing plan
-      await editStep(form.id, form);
+      await editStep(planId, form.id, form);
       console.log("Updated step:", form);
     } else {
       // Create a new plan
-      await addStep(form);
+      form.id = await addStep(planId, form);
       console.log("Created new step:", form);
     }
 
@@ -98,7 +100,7 @@ export default function ModalForStepModfication({
               className="btn-close"
               color="none"
               onClick={toggleOpen}
-            ></MDBBtn>
+            />
           </MDBModalHeader>
           <MDBModalBody>
             <form id="stepForm" onSubmit={handleSubmit} ref={formRef}>

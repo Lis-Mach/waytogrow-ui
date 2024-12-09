@@ -1,5 +1,5 @@
 import useStepContext from "../../providers/StepContext";
-
+import ModalForStepModfication from "./ModalForStepModification";
 import React, { useEffect, useState } from "react";
 import { MDBContainer, MDBBtn } from "mdb-react-ui-kit";
 import StepCardList from "./StepCardList";
@@ -22,7 +22,7 @@ function StepPage(): React.ReactElement {
 
   useEffect(() => {
     if (planId) {
-      getSteps(Number(planId)); // Fetch the steps for the given planId
+      getSteps(Number(planId)); 
     }
   }, []);
 
@@ -30,13 +30,44 @@ function StepPage(): React.ReactElement {
     setUSteps(steps);
   }, [steps]);
 
-  
+  const [basicModal, setBasicModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState<string>("");
+
+  const emptyStepWithId = {
+    title: "",
+    subtitle: "",
+    status: false,
+    id: 0,
+    order: 0,
+    plan_id: 0,
+  };
+
+  const toggleOpen = (title: string) => {
+    setModalTitle(title);
+    setBasicModal(!basicModal); // Toggle the modal visibility
+  };
+
+  const handleStepModification = (modifiedStep: IStepWithID) => {
+    updateStep(modifiedStep);
+  };
+ 
   
   return (
     <MDBContainer>
-      {/* <MDBBtn onClick={() => toggleOpen("Utwórz nowy")} rippleColor="light"> */}
-        {/* Utwórz NOWY */}
-      {/* </MDBBtn> */}
+     
+     <MDBBtn onClick={() => toggleOpen("Utwórz nowy")} rippleColor="secondary">
+        Utwórz NOWY
+      </MDBBtn>
+      <h1></h1>
+      <ModalForStepModfication
+        stepWithId={emptyStepWithId}
+        isOpen={basicModal}
+        toggleOpen={() => toggleOpen(modalTitle)}
+        title={modalTitle}
+        actionType="create"
+        onStepModified={handleStepModification}
+        planId={Number(planId)}
+      />
       <h1></h1>
       <StepCardList steps={uSteps} updateStep={updateStep} />
     </MDBContainer>
