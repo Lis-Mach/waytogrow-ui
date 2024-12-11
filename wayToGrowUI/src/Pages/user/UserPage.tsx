@@ -78,7 +78,7 @@ export default function UserPage(): React.ReactElement {
         <MDBInput
           disabled
           wrapperClass="mb-4"
-          label="Password"
+          label="Hasło"
           id="formName"
           type="text"
           name="password"
@@ -89,7 +89,7 @@ export default function UserPage(): React.ReactElement {
         <MDBInput
           onChange={handleInputChange}
           wrapperClass="mb-4"
-          label="Name"
+          label="Imię"
           id="formName"
           type="text"
           name="name"
@@ -100,7 +100,7 @@ export default function UserPage(): React.ReactElement {
         <MDBInput
           onChange={handleInputChange}
           wrapperClass="mb-4"
-          label="Surname"
+          label="Nazwisko"
           id="formSurname"
           type="text"
           name="surname"
