@@ -87,6 +87,7 @@ export default function ModalForPlanModfication({
       
     toggleOpen();
     onPlanModified(form)
+   
   }
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -144,7 +145,7 @@ export default function ModalForPlanModfication({
                 name="image"
                 accept="image/*"
               />
-              {file && <img className="img-fluid"
+              {file && <img className="img-fluid vw-100"
             style={{ height: "250px", objectFit: "cover" }} src={file} alt="Uploaded" />}
           </MDBModalBody>
 

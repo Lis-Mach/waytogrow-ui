@@ -51,7 +51,7 @@ export default function StepCard({
           {step.status ? (
             <MDBIcon far icon="check-square" size="2x" iconType="solid" />
           ) : (
-            <span>Zrób to</span> // Display something else if needed
+            <span>Do zrobienia</span>
           )}
         </td>
         <td>

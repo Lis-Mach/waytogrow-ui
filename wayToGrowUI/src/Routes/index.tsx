@@ -22,17 +22,7 @@ import { SignupContextProvider } from "../providers/SignupContext";
 const Routes: React.FC = () => {
   const { token } = useAuth();
 
-  // Define public routes accessible to all users
-  // const routesForPublic: RouteObject[] = [
-  //   {
-  //     path: "/service",
-  //     element: <div>Service Page</div>,
-  //   },
-  //   {
-  //     path: "/about-us",
-  //     element: <div>About Us</div>,
-  //   },
-  // ];
+  
 
   // Define routes accessible only to authenticated users
   const routesForAuthenticatedOnly: RouteObject[] = [

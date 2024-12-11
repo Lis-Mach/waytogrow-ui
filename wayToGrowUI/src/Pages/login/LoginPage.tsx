@@ -52,7 +52,7 @@ function LoginPage(): React.ReactElement {
         <MDBInput
           onChange={handlechange}
           wrapperClass="mb-4"
-          label="Password"
+          label="Hasło"
           id="form2"
           type="password"
           name="password"
@@ -64,11 +64,11 @@ function LoginPage(): React.ReactElement {
           {/* <a href="!#">Forgot password?</a> */}
         </div>
         <MDBBtn className="mb-4" type="submit">
-          Sign in
+          Zaloguj się
         </MDBBtn>
         <div className="text-center">
           <p>
-            Not a member? <a href="/register">Register</a>
+           Nie jesteś zarejestrowany ? <a href="/register">Zarejestruj się</a>
           </p>
         </div>
       </MDBContainer>

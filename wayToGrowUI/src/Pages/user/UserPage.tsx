@@ -1,11 +1,10 @@
-import { useNavigate } from "react-router-dom";
 import useUserContext from "../../providers/UserContext";
 import React, { useEffect, useState, useRef } from "react";
 import { MDBBtn, MDBContainer, MDBInput } from "mdb-react-ui-kit";
 import { IUserWithID } from "../../App.interfaces";
 
 export default function UserPage(): React.ReactElement {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { updateUser, user } = useUserContext();
 
   // State to manage the form with IUserWithID type

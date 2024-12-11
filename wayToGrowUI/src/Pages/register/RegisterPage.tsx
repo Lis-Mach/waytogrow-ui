@@ -51,7 +51,7 @@ function RegisterPage(): React.ReactElement {
 
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
-      <h2 className="text-center">Register</h2>
+      <h2 className="text-center">Zarejestruj się</h2>
 
       {/* Error message */}
       {error && (
@@ -79,7 +79,7 @@ function RegisterPage(): React.ReactElement {
         <MDBInput
           onChange={handleInputChange}
           wrapperClass="mb-4"
-          label="Name"
+          label="Imię"
           id="formName"
           type="text"
           name="name"
@@ -91,7 +91,7 @@ function RegisterPage(): React.ReactElement {
         <MDBInput
           onChange={handleInputChange}
           wrapperClass="mb-4"
-          label="Surname"
+          label="Nazwisko"
           id="formSurname"
           type="text"
           name="surname"
@@ -115,7 +115,7 @@ function RegisterPage(): React.ReactElement {
         <MDBInput
           onChange={handleInputChange}
           wrapperClass="mb-4"
-          label="Password"
+          label="Hasło"
           id="formPassword"
           type="password"
           name="password"
@@ -125,7 +125,7 @@ function RegisterPage(): React.ReactElement {
 
         {/* Submit Button */}
         <MDBBtn type="submit" className="mb-4" block>
-          Register
+          Zarejestruj
         </MDBBtn>
       </form>
     </MDBContainer>

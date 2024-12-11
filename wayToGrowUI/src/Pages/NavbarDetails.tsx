@@ -29,7 +29,7 @@ export default function NavbarDetails() {
 
       <MDBNavbar expand="lg" dark bgColor="dark">
         <MDBContainer fluid>
-          <MDBNavbarBrand href="/">Way to Grow</MDBNavbarBrand>
+          <MDBNavbarBrand href="/">Way to GROW</MDBNavbarBrand>
           <MDBNavbarToggler
             type="button"
             data-target="#navbarColor02"

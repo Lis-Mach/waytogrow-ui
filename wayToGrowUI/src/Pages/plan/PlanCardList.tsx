@@ -25,10 +25,7 @@ export default function PlanCardList({
   };
 
   const handlePlanModification = (modifiedPlan: IPlanWithID) => {
-    setTimeout(() => { 
-      updatePlan(modifiedPlan);
-    }, 1000)
-    
+      updatePlan(modifiedPlan);  
   };
 
   return (

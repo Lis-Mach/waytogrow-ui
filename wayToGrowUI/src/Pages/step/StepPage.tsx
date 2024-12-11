@@ -1,11 +1,12 @@
 import useStepContext from "../../providers/StepContext";
 import ModalForStepModfication from "./ModalForStepModification";
 import React, { useEffect, useState } from "react";
-import { MDBContainer, 
+import {
+  MDBContainer,
   MDBBtn,
   MDBProgress,
-  MDBProgressBar
- } from "mdb-react-ui-kit";
+  MDBProgressBar,
+} from "mdb-react-ui-kit";
 import StepCardList from "./StepCardList";
 import { useParams } from "react-router-dom";
 import { IStepWithID } from "../../App.interfaces";
@@ -17,7 +18,6 @@ function StepPage(): React.ReactElement {
 
   console.log(`PLANID:  ${planId}`);
 
-
   const updateStep = (updatedStep: IStepWithID) => {
     setUSteps((prevSteps) =>
       prevSteps.map((step) => (step.id === updatedStep.id ? updatedStep : step))
@@ -26,7 +26,7 @@ function StepPage(): React.ReactElement {
 
   useEffect(() => {
     if (planId) {
-      getSteps(Number(planId)); 
+      getSteps(Number(planId));
     }
   }, []);
 
@@ -54,17 +54,16 @@ function StepPage(): React.ReactElement {
   const handleStepModification = (modifiedStep: IStepWithID) => {
     updateStep(modifiedStep);
   };
- 
-   // Calculate the percentage of steps with status: true
-   const totalSteps = uSteps.length;
-   const completedSteps = uSteps.filter((step) => step.status).length;
-   const progressPercentage = totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
- 
-  
+
+  // Calculate the percentage of steps with status: true
+  const totalSteps = uSteps.length;
+  const completedSteps = uSteps.filter((step) => step.status).length;
+  const progressPercentage =
+    totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
+
   return (
     <MDBContainer>
-     
-     <MDBBtn onClick={() => toggleOpen("Utwórz nowy")} rippleColor="secondary">
+      <MDBBtn onClick={() => toggleOpen("Utwórz nowy")} rippleColor="secondary">
         Utwórz NOWY
       </MDBBtn>
       <h1></h1>

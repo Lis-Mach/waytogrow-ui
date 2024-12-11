@@ -41,8 +41,9 @@ export default function PlanCard({
       const imageUrl = await getPlanImage(plan.id);
       setImageSrc(imageUrl);
     };
-
+    setTimeout(() => { 
     fetchImage();
+  }, 1000)
   }, [plan.id, getPlanImage]);
 
   const handleViewSteps = () => {
@@ -73,7 +74,7 @@ export default function PlanCard({
           rippleTag="div"
           className="bg-image hover-overlay"
         >
-          <MDBCardImage
+          <MDBCardImage className="vw-100"
             src={
               imageSrc ||
               "https://mdbootstrap.com/img/new/standard/nature/111.webp"
@@ -113,6 +114,7 @@ export default function PlanCard({
           </>
         </MDBCardBody>
       </MDBCard>
+      <br />
     </MDBCol>
   );
 }
