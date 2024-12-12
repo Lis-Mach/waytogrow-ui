@@ -2,14 +2,18 @@ import useUserContext from "../../providers/UserContext";
 import React, { useEffect, useState, useRef } from "react";
 import { MDBBtn, MDBContainer, MDBInput } from "mdb-react-ui-kit";
 import { IUserWithID } from "../../App.interfaces";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../providers/AuthProvider";
 
 export default function UserPage(): React.ReactElement {
-  // const navigate = useNavigate();
   const { updateUser, user } = useUserContext();
 
   // State to manage the form with IUserWithID type
   const [form, setForm] = useState<IUserWithID>(() => user);
   const [error, setError] = useState<string | null>(null);
+  const { deleteUser } = useUserContext();
+  const { setToken } = useAuth();
+  const navigate = useNavigate();
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -52,6 +56,12 @@ export default function UserPage(): React.ReactElement {
   if (!form) {
     return <div>Loading...</div>;
   }
+
+  const handleDelete = () => {
+    deleteUser(user.id);
+    setToken(null);
+    navigate("/", { replace: true });
+  };
 
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
@@ -123,6 +133,14 @@ export default function UserPage(): React.ReactElement {
           Modyfikuj
         </MDBBtn>
       </form>
+      <MDBBtn
+            onClick={handleDelete}
+            block
+            color="danger"
+            rippleColor="secondary"
+          >
+            Usuń Konto
+          </MDBBtn>
     </MDBContainer>
   );
 }

@@ -18,7 +18,7 @@ export default function NavbarDetails() {
   const { setToken } = useAuth();
   const navigate = useNavigate();
 
-  async function handleLogout() {
+  function handleLogout() {
     setToken(null);
     navigate("/", { replace: true });
   }

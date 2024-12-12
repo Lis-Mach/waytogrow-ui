@@ -56,7 +56,7 @@ export default function FooterDetails() {
             </MDBCol>
 
             <MDBCol md="4" lg="3" xl="3" className="mx-auto mb-md-0 mb-4">
-              <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
+              <h6 className="text-uppercase fw-bold mb-4">Kontakt</h6>
               <p>
                 <MDBIcon icon="home" className="me-2" />
                 New York, NY 10012, US
@@ -82,7 +82,7 @@ export default function FooterDetails() {
       >
         © 2024 Copyright:
         <a className="text-reset fw-bold" href="https://mdbootstrap.com/">
-          WayToGrow
+            WayToGrow
         </a>
       </div>
     </MDBFooter>

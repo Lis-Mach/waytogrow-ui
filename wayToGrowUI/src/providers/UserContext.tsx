@@ -22,10 +22,12 @@ const UserContext = createContext<{
   user: IUserWithID;
   getUser: () => Promise<IUserWithID>;
   updateUser: (payload: IUserWithID) => Promise<boolean>;
+  deleteUser: (id: number) => void;
 }>({
   user: emptyUser,
   getUser: async () => emptyUser,
   updateUser: async () => false,
+  deleteUser: () => {},
 });
 
 export function UserContextProvider({
@@ -98,6 +100,35 @@ export function UserContextProvider({
         return false;
       });
   }
+  
+  async function deleteUser(id: number ) {
+    return await api
+      .delete(`/user/${id}`)
+      .then(function (response) {
+        console.log(response.data);
+        return true;
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          alert(error.response.data.error.message);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+        }
+        console.log(error.config);
+        return false;
+      });
+  }
 
   useEffect(() => {
     async function fetchUser() {
@@ -109,7 +140,7 @@ export function UserContextProvider({
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, getUser, updateUser }}>
+    <UserContext.Provider value={{ user, getUser, updateUser, deleteUser }}>
       {children}
     </UserContext.Provider>
   );
