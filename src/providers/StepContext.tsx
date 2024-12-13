@@ -31,6 +31,7 @@ export function StepContextProvider({
 }: PropsWithChildren): React.ReactElement {
   const [state, dispatch] = useReducer(stepReducer, initialState);
   const { token } = useAuth();
+  
   useEffect(() => {
     if (token) {
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -76,12 +77,6 @@ export function StepContextProvider({
       console.error(error);
     }
   }
-
-  useEffect(() => {
-    if (state.length === 0) {
-      console.log("No planId passed yet");
-    }
-  }, [state]);
 
   return (
     <StepContext.Provider

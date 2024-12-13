@@ -5,6 +5,8 @@ import React from "react";
 import { MDBBtn, MDBContainer, MDBRow, MDBCol } from "mdb-react-ui-kit";
 import HomePageImage from "./HomePageImage.png";
 
+
+
 export default function HomePage(): React.ReactElement {
   const navigate = useNavigate();
 

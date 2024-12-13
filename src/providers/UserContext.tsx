@@ -106,7 +106,6 @@ export function UserContextProvider({
       .delete(`/user/${id}`)
       .then(function (response) {
         console.log(response.data);
-        return true;
       })
       .catch(function (error) {
         if (error.response) {
@@ -126,7 +125,6 @@ export function UserContextProvider({
           console.log("Error", error.message);
         }
         console.log(error.config);
-        return false;
       });
   }
 
