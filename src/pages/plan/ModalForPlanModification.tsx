@@ -19,7 +19,7 @@ interface ModalComponentProps {
   toggleOpen: () => void;
   title: string;
   actionType: "edit" | "create";
-  onPlanModified: (modifiedPlan: IPlanWithID) => void; 
+
 }
 
 export default function ModalForPlanModfication({
@@ -28,7 +28,7 @@ export default function ModalForPlanModfication({
   toggleOpen,
   title,
   actionType,
-  onPlanModified
+
 }: ModalComponentProps): React.ReactElement {
   const { editPlan, addPlan, setPlanImage } = usePlanContext();
 
@@ -86,7 +86,7 @@ export default function ModalForPlanModfication({
     }
       
     toggleOpen();
-    onPlanModified(form)
+
    
   }
 

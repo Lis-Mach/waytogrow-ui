@@ -16,12 +16,12 @@ import ModalForPlanModfication from "./ModalForPlanModification";
 
 interface PlanCardProps {
   plan: IPlanWithID;
-  updatePlan: (updatedPlan: IPlanWithID) => void;
+
 }
 
 export default function PlanCard({
   plan,
-  updatePlan,
+
 }: PlanCardProps): React.ReactElement {
   const { getPlanImage, deletePlan } = usePlanContext();
   const navigate = useNavigate();
@@ -50,9 +50,7 @@ export default function PlanCard({
     navigate(`/steps/${plan.id}`); // Navigate to /steps/:planId
   };
 
-  const handlePlanModification = (modifiedPlan: IPlanWithID) => {
-    updatePlan(modifiedPlan);
-  };
+ 
 
   const handleDelete = () => {
     deletePlan(plan.id);
@@ -66,7 +64,7 @@ export default function PlanCard({
         toggleOpen={() => toggleOpen(modalTitle)}
         title={modalTitle}
         actionType="edit"
-        onPlanModified={handlePlanModification}
+        
       />
       <MDBCard>
         <MDBRipple

@@ -6,12 +6,12 @@ import React, { useState } from "react";
 
 interface PlanCardListProps {
   plans: IPlanWithID[];
-  updatePlan: (updatedPlan: IPlanWithID) => void;
+ 
 }
 
 export default function PlanCardList({
   plans,
-  updatePlan,
+
 }: PlanCardListProps): React.ReactElement {
   console.log(plans);
   const [basicModal, setBasicModal] = useState(false);
@@ -24,9 +24,7 @@ export default function PlanCardList({
     setBasicModal(!basicModal); // Toggle the modal visibility
   };
 
-  const handlePlanModification = (modifiedPlan: IPlanWithID) => {
-      updatePlan(modifiedPlan);  
-  };
+
 
   return (
     <div>
@@ -40,14 +38,14 @@ export default function PlanCardList({
         toggleOpen={() => toggleOpen(modalTitle)}
         title={modalTitle}
         actionType="create"
-        onPlanModified={handlePlanModification}
+   
       />
       <MDBRow>
         {plans.map((plan) => (
           <PlanCard
             key={plan.id}
             plan={plan}
-            updatePlan={updatePlan}
+         
           ></PlanCard>
         ))}
       </MDBRow>
